@@ -19,9 +19,9 @@ export default function HomePage() {
             A sentence becomes a self-tested manipulative.
           </h1>
           <p className="mx-auto max-w-xl text-base" style={{ color: "var(--text-mid)" }}>
-            Ms. Alvarez types the misconception she fights every year. Two minutes later she
-            has a live, phone-friendly manipulative that <em>passed its own tests</em> — and a
-            link to text her students.
+            Ms. Alvarez types the misconception she fights every year. Two minutes later she has a
+            live, phone-friendly manipulative that <em>passed its own tests</em> — and a link to
+            text her students.
           </p>
         </div>
 

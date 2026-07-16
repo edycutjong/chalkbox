@@ -173,11 +173,7 @@ export interface CompiledArtifact {
 }
 
 export type AttemptOutcome =
-  | "passed"
-  | "validation_failed"
-  | "render_failed"
-  | "invariant_failed"
-  | "safety_rejected";
+  "passed" | "validation_failed" | "render_failed" | "invariant_failed" | "safety_rejected";
 
 export interface GenerationAttempt {
   n: number;

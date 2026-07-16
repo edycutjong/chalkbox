@@ -32,13 +32,7 @@ export function SubjectTag({ subject }: { subject: Subject }) {
   );
 }
 
-export function StandardChip({
-  code,
-  text,
-}: {
-  code: string;
-  text: string;
-}) {
+export function StandardChip({ code, text }: { code: string; text: string }) {
   return (
     <span
       className="inline-flex items-center gap-1.5 rounded-md px-2 py-1 font-mono text-[11px]"

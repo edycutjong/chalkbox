@@ -12,25 +12,11 @@ import type { GallerySim } from "@/lib/seed/gallery";
  * the skeleton; the other 14 seed sims show an honest static preview until the
  * real Codex engine emits their bundles.
  */
-export function SimFrame({
-  sim,
-  compact = false,
-}: {
-  sim: GallerySim;
-  compact?: boolean;
-}) {
+export function SimFrame({ sim, compact = false }: { sim: GallerySim; compact?: boolean }) {
   return (
     // STUB: replace inner render with the cross-origin sandboxed <iframe>.
-    <div
-      data-sim-slug={sim.slug}
-      data-sandbox="allow-scripts; connect-src none"
-      className="w-full"
-    >
-      {sim.interactive ? (
-        <FractionDivision compact={compact} />
-      ) : (
-        <StaticPreview sim={sim} />
-      )}
+    <div data-sim-slug={sim.slug} data-sandbox="allow-scripts; connect-src none" className="w-full">
+      {sim.interactive ? <FractionDivision compact={compact} /> : <StaticPreview sim={sim} />}
     </div>
   );
 }

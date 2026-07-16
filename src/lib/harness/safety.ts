@@ -53,10 +53,8 @@ function inferStandard(subject: "math" | "physics", prompt: string): StandardRef
     if (p.includes("negative")) return { framework: "CCSS", code: "7.NS.A.1" };
     return { framework: "CCSS", code: "6.NS.A.1" };
   }
-  if (p.includes("fall") || p.includes("gravity"))
-    return { framework: "NGSS", code: "HS-PS2-1" };
-  if (p.includes("energy") || p.includes("kinetic"))
-    return { framework: "NGSS", code: "MS-PS3-1" };
+  if (p.includes("fall") || p.includes("gravity")) return { framework: "NGSS", code: "HS-PS2-1" };
+  if (p.includes("energy") || p.includes("kinetic")) return { framework: "NGSS", code: "MS-PS3-1" };
   return { framework: "NGSS", code: "MS-PS2-2" };
 }
 

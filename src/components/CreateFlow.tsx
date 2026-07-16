@@ -52,16 +52,15 @@ export function CreateFlow() {
   const pushStep = useCallback((step: Step) => {
     setSteps((prev) => [...prev, step]);
   }, []);
-  const settleLast = useCallback(
-    (state: StepState, detail?: string, accent?: boolean) => {
-      setSteps((prev) =>
-        prev.map((s, i) =>
-          i === prev.length - 1 ? { ...s, state, ts: stamp(), detail: detail ?? s.detail, accent } : s,
-        ),
-      );
-    },
-    [],
-  );
+  const settleLast = useCallback((state: StepState, detail?: string, accent?: boolean) => {
+    setSteps((prev) =>
+      prev.map((s, i) =>
+        i === prev.length - 1
+          ? { ...s, state, ts: stamp(), detail: detail ?? s.detail, accent }
+          : s,
+      ),
+    );
+  }, []);
 
   const run = useCallback(async () => {
     if (runningRef.current) return;
@@ -112,10 +111,17 @@ export function CreateFlow() {
       state: "active",
     });
     await sleep(850);
-    settleLast("fail", "✗ smoke test: quotient went DOWN as divisor shrank [1.11, 2.00, 4.00, 3.33]");
+    settleLast(
+      "fail",
+      "✗ smoke test: quotient went DOWN as divisor shrank [1.11, 2.00, 4.00, 3.33]",
+    );
 
     // Attempt 3 — fixed ÷; real invariants pass.
-    pushStep({ id: "a3", label: "Codex fixed the ÷ bug — re-running its own smoke test…", state: "active" });
+    pushStep({
+      id: "a3",
+      label: "Codex fixed the ÷ bug — re-running its own smoke test…",
+      state: "active",
+    });
     await sleep(900);
     const finalReport = gen.attempts[gen.attempts.length - 1].invariantRun;
     settleLast(
@@ -150,7 +156,11 @@ export function CreateFlow() {
     <div className="flex w-full flex-col gap-8">
       {phase === "idle" || phase === "rejected" ? (
         <div className="glass flex flex-col gap-5 rounded-3xl p-6 sm:p-8">
-          <label htmlFor="prompt" className="text-2xl font-bold" style={{ color: "var(--text-hi)" }}>
+          <label
+            htmlFor="prompt"
+            className="text-2xl font-bold"
+            style={{ color: "var(--text-hi)" }}
+          >
             What do you want your students to <em style={{ color: "var(--accent)" }}>feel</em>?
           </label>
           <textarea
@@ -219,7 +229,9 @@ export function CreateFlow() {
               <div className="flex flex-1 flex-col">
                 <span
                   className="text-sm font-medium"
-                  style={{ color: s.accent && s.state === "pass" ? "var(--accent)" : "var(--text-hi)" }}
+                  style={{
+                    color: s.accent && s.state === "pass" ? "var(--accent)" : "var(--text-hi)",
+                  }}
                 >
                   {s.label}
                 </span>
@@ -244,7 +256,10 @@ export function CreateFlow() {
           <SimFrame sim={HERO_SIM} />
           <div className="glass flex flex-col gap-3 rounded-2xl p-5 sm:flex-row sm:items-center sm:justify-between">
             <div className="flex flex-col">
-              <span className="text-xs uppercase tracking-widest" style={{ color: "var(--text-low)" }}>
+              <span
+                className="text-xs uppercase tracking-widest"
+                style={{ color: "var(--text-low)" }}
+              >
                 Student share link
               </span>
               <span className="font-mono text-sm" style={{ color: "var(--primary)" }}>

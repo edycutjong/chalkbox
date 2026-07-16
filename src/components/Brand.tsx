@@ -6,10 +6,7 @@ export function Brand({ href = "/" }: { href?: string }) {
       <span aria-hidden className="text-2xl leading-none">
         🖍️
       </span>
-      <span
-        className="text-lg font-bold tracking-tight"
-        style={{ color: "var(--text-hi)" }}
-      >
+      <span className="text-lg font-bold tracking-tight" style={{ color: "var(--text-hi)" }}>
         Chalkbox
       </span>
     </Link>

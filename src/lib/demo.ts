@@ -17,5 +17,4 @@ export const DEMO_MODE: boolean =
   (!process.env.OPENAI_API_KEY && process.env.CHALKBOX_DEMO_MODE !== "false");
 
 /** A short, honest banner shown wherever demo data is served. */
-export const DEMO_NOTICE =
-  "Demo mode — pre-seeded build trace, no live Codex/Supabase call.";
+export const DEMO_NOTICE = "Demo mode — pre-seeded build trace, no live Codex/Supabase call.";

@@ -103,10 +103,7 @@ export function Manipulative() {
 
     // ── Attempt 3 — fixed ÷; validate + run REAL invariants against the probe. ──
     const v3 = staticValidator.validate(FRACTION_DIVISION_SOURCE);
-    const report = invariantRunner.run(
-      createFractionDivisionProbe(),
-      FRACTION_DIVISION_SPEC,
-    );
+    const report = invariantRunner.run(createFractionDivisionProbe(), FRACTION_DIVISION_SPEC);
     const passed = v3.ok && report.passed;
     attempts.push({
       n: 3,

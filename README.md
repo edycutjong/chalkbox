@@ -18,6 +18,8 @@
   ![Supabase](https://img.shields.io/badge/Supabase-3ECF8E?style=flat&logo=supabase&logoColor=white)
   ![Vercel](https://img.shields.io/badge/Vercel-black?style=flat&logo=vercel)
   [![License: MIT](https://img.shields.io/badge/License-MIT-14b8a6?style=flat)](LICENSE)
+  [![CI](https://github.com/edycutjong/chalkbox/actions/workflows/ci.yml/badge.svg)](https://github.com/edycutjong/chalkbox/actions/workflows/ci.yml)
+  [![CodeQL](https://github.com/edycutjong/chalkbox/actions/workflows/codeql.yml/badge.svg)](https://github.com/edycutjong/chalkbox/actions/workflows/codeql.yml)
 
 </div>
 
@@ -100,6 +102,68 @@ cd chalkbox
 npm install
 cp .env.example .env.local   # add your OpenAI + Supabase keys
 npm run dev
+```
+
+---
+
+## 🧪 Testing & CI
+
+The generation loop is the moat — so the harness that guards it is production-grade. A **6-stage GitHub Actions pipeline** runs on every push: **Quality → Security → Build → E2E → Performance → Deploy Gate**, with concurrency cancellation and a Node `20 / 22 / 24` matrix on `main`.
+
+```bash
+# ── Code Quality ────────────────────────────
+npm run lint          # ESLint (next lint)
+npm run typecheck     # TypeScript strict (tsc --noEmit)
+npm run test          # Unit tests (Vitest)
+npm run test:coverage # Coverage report (v8)
+npm run format:check  # Prettier
+npm run ci            # Full quality gate (format + lint + typecheck + coverage + build)
+
+# ── Advanced Testing ────────────────────────
+npm run build && npm run e2e   # Playwright E2E (demo mode, no keys)
+npm run e2e:ui                 # Playwright interactive mode
+npm run lighthouse             # Lighthouse CI audit
+
+# ── Security ────────────────────────────────
+make security-scan             # npm audit + license compliance
+```
+
+The unit suite covers the harness that *is* the product — the invariant runner, the static validator (import allowlist / no-network), and the retry orchestrator.
+
+| Layer            | Tool                                | Status |
+| ---------------- | ----------------------------------- | ------ |
+| Code Quality     | ESLint + TypeScript strict          | ✅     |
+| Formatting       | Prettier                            | ✅     |
+| Unit Testing     | Vitest (harness suites)             | ✅     |
+| E2E Testing      | Playwright (3 specs, demo mode)     | ✅     |
+| Security (SAST)  | CodeQL                              | ✅     |
+| Security (SCA)   | Dependabot + npm audit              | ✅     |
+| Secret Scanning  | TruffleHog + push protection        | ✅     |
+| Performance      | Lighthouse CI                       | ✅     |
+
+E2E specs run entirely in **demo mode** with zero environment variables: a smoke test (`e2e/demo-mode.spec.ts`), the core Create flow through to a published share link (`e2e/create-flow.spec.ts`), and responsive layout at 375 / 768 / 1440 px (`e2e/responsive.spec.ts`).
+
+---
+
+## 📁 Project Structure
+
+```
+chalkbox/
+├── docs/                 # PRD, architecture, complexity blueprint + README assets
+│   └── assets/           # Hero, OG image, gallery/thumbnail renders
+├── e2e/                  # Playwright specs (demo-mode, create-flow, responsive)
+├── public/               # icon.svg + og-image.png (wired into layout metadata)
+├── src/
+│   ├── app/              # Next.js App Router pages (/, /gallery, /create, /s/[shareId])
+│   ├── components/       # CreateFlow, GalleryGrid, SimFrame, Header, Brand, Badges
+│   └── lib/
+│       ├── harness/      # The moat: validator, invariant-runner, orchestrator, safety
+│       ├── manipulatives/# Flagship interactive (fraction-division)
+│       └── seed/         # Curriculum-tagged gallery seed data
+├── .github/              # CI/CD pipeline, CodeQL, Dependabot, community health files
+├── lighthouserc.json     # Performance/accessibility/SEO thresholds
+├── playwright.config.ts  # E2E config
+└── README.md             # You are here
 ```
 
 ---

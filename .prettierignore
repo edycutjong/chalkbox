@@ -1,0 +1,19 @@
+# Build output & deps
+node_modules/
+.next/
+out/
+dist/
+coverage/
+.lighthouseci/
+playwright-report/
+test-results/
+
+# Lockfiles & generated
+package-lock.json
+next-env.d.ts
+*.tsbuildinfo
+
+# Docs & assets are authored artifacts — leave formatting untouched
+docs/
+*.md
+public/

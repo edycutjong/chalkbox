@@ -16,11 +16,7 @@ export async function generateMetadata({
   };
 }
 
-export default async function StudentPage({
-  params,
-}: {
-  params: Promise<{ shareId: string }>;
-}) {
+export default async function StudentPage({ params }: { params: Promise<{ shareId: string }> }) {
   const { shareId } = await params;
   const sim = getSimByShareId(shareId);
   if (!sim) notFound();
@@ -39,7 +35,11 @@ export default async function StudentPage({
       <section
         data-testid="question-card"
         className="mx-auto w-full max-w-md rounded-2xl p-4 text-center text-sm"
-        style={{ background: "#ffffff", border: "1px solid #e2e8f0", boxShadow: "0 4px 12px rgba(0,0,0,0.06)" }}
+        style={{
+          background: "#ffffff",
+          border: "1px solid #e2e8f0",
+          boxShadow: "0 4px 12px rgba(0,0,0,0.06)",
+        }}
       >
         {sim.hero
           ? "You made the piece smaller but the answer got bigger. Predict 1 ÷ 0.25 before you drag there."

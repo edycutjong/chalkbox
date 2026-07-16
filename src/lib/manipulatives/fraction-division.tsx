@@ -36,10 +36,7 @@ export default function FractionDivision({
 }: FractionDivisionProps) {
   const [divisor, setDivisor] = useState(DIVISOR_INITIAL);
 
-  const quotient = useMemo(
-    () => computeQuotient(dividend, divisor),
-    [dividend, divisor],
-  );
+  const quotient = useMemo(() => computeQuotient(dividend, divisor), [dividend, divisor]);
 
   // Draw whole pieces + a partial remainder, capped for legibility.
   const pieces = useMemo(() => {
@@ -101,7 +98,10 @@ export default function FractionDivision({
       </div>
 
       <div className="flex flex-col gap-2">
-        <div className="flex items-center justify-between text-xs" style={{ color: "var(--text-mid)" }}>
+        <div
+          className="flex items-center justify-between text-xs"
+          style={{ color: "var(--text-mid)" }}
+        >
           <span>smaller piece →</span>
           <span>divisor = {divisor.toFixed(2)}</span>
           <span>← bigger piece</span>
@@ -113,9 +113,7 @@ export default function FractionDivision({
           max={DIVISOR_MAX}
           step={0.01}
           value={divisor}
-          onChange={(e) =>
-            setDivisor(clamp(Number(e.target.value), DIVISOR_MIN, DIVISOR_MAX))
-          }
+          onChange={(e) => setDivisor(clamp(Number(e.target.value), DIVISOR_MIN, DIVISOR_MAX))}
           aria-label="Divisor (piece size)"
           className="w-full accent-[var(--primary)]"
         />

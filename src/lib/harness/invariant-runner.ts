@@ -93,9 +93,7 @@ function runOne(probe: SimProbe, inv: Invariant): InvariantResult {
         probe.drive(step);
         observed.push(probe.read(inv.observe.probe));
       }
-      const offending = observed.find(
-        (v) => !Number.isFinite(v) || v < inv.min || v > inv.max,
-      );
+      const offending = observed.find((v) => !Number.isFinite(v) || v < inv.min || v > inv.max);
       const passed = offending === undefined;
       return {
         id: inv.id,
@@ -182,8 +180,7 @@ export class InvariantRunner {
 
     // renderProbe root must exist before any interaction is driven.
     const rootPresent =
-      probe.rootTestId === spec.renderProbe.rootTestId &&
-      probe.testIds().length >= 0;
+      probe.rootTestId === spec.renderProbe.rootTestId && probe.testIds().length >= 0;
     if (!rootPresent) {
       results.push({
         id: "root-render-probe",

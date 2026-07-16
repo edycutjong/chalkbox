@@ -17,11 +17,7 @@ import {
   PROTO_MARKERS,
   SIZE_CAPS,
 } from "./allowlist";
-import type {
-  ValidationResult,
-  Violation,
-  ViolationRule,
-} from "./types";
+import type { ValidationResult, Violation, ViolationRule } from "./types";
 
 function lineColFromIndex(source: string, index: number): { line: number; col: number } {
   let line = 1;
@@ -183,9 +179,7 @@ function scanCspIncompat(source: string): Violation[] {
 }
 
 export class StaticValidator {
-  constructor(
-    private readonly allow: readonly string[] = ALLOWED_IMPORT_SPECIFIERS,
-  ) {}
+  constructor(private readonly allow: readonly string[] = ALLOWED_IMPORT_SPECIFIERS) {}
 
   validate(source: string): ValidationResult {
     const violations: Violation[] = [];
