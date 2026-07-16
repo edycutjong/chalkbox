@@ -1,5 +1,5 @@
 <div align="center">
-  <h1>Chalkbox ✏️</h1>
+  <h1>Chalkbox 🖍️</h1>
   <p><em>Type the misconception; get a self-tested interactive manipulative in two minutes.</em></p>
   <img src="docs/assets/readme-hero.png" alt="Chalkbox — interactive manipulatives, conjured by a teacher's sentence" width="100%">
 
