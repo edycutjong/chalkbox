@@ -16,7 +16,7 @@
 
   ![Next.js](https://img.shields.io/badge/Next.js-black?style=flat&logo=next.js)
   ![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=flat&logo=typescript&logoColor=white)
-  ![Codex](https://img.shields.io/badge/Codex_SDK-412991?style=flat&logo=openai&logoColor=white)
+  ![Codex CLI](https://img.shields.io/badge/Codex_CLI-412991?style=flat&logo=openai&logoColor=white)
   ![GPT-5.6](https://img.shields.io/badge/GPT--5.6-412991?style=flat&logo=openai&logoColor=white)
   ![Supabase](https://img.shields.io/badge/Supabase-3ECF8E?style=flat&logo=supabase&logoColor=white)
   ![Vercel](https://img.shields.io/badge/Vercel-black?style=flat&logo=vercel)
@@ -47,7 +47,7 @@ Interactive manipulatives are the single most effective tool for breaking a math
 **Key Features:**
 - ⚡ **Self-testing generation loop** — At runtime, Codex writes a single-file interactive React component, renders it headlessly, asserts its *interactive invariants* hold (a smoke test Codex also writes), retries with the error trace on failure, and only then publishes. This loop is the moat.
 - 🎓 **Curriculum-tagged gallery** — A public grid seeded with manipulatives, each showing its real Common Core / NGSS standard code and the exact prompt that generated it.
-- 📱 **Phone-friendly share links** — Students open a zero-chrome sim running inside a locked-down, network-severed sandboxed iframe.
+- 📱 **Phone-friendly share links** — Students open a zero-chrome, phone-first sim. Generated components are static-validated (no network imports) and served under a strict no-network CSP; the cross-origin sandboxed-iframe host is the next hardening step.
 
 ---
 
@@ -63,7 +63,7 @@ G2  static/AST validation        →  import allowlist, no network APIs
 G3  interactive invariants       →  "drag divisor smaller ⇒ quotient bigger" ✓
     (fail → retry with trace, bounded budget)
 G4  Luna output safety           →  no inappropriate labels
-    publish                      →  sandboxed iframe, CSP no-network
+    publish                      →  strict no-network CSP (sandboxed-iframe host in progress)
 ```
 
 The pedagogy itself is encoded as a machine-checked test. If Codex generates a sim where dragging the divisor down makes the quotient go *down*, it's pedagogically wrong even though it "renders fine" — and **G3 catches it and forces a retry.** See [`docs/COMPLEXITY.md`](docs/COMPLEXITY.md) for the full invariant DSL and sandbox model.
@@ -75,7 +75,7 @@ The pedagogy itself is encoded as a machine-checked test. If Codex generates a s
 | Layer | Technology |
 |---|---|
 | **Frontend** | Next.js + React on Vercel |
-| **Generation engine** | Codex SDK (TypeScript) driving `codex` in sandboxed per-request working dirs |
+| **Generation engine** | GPT-5.6 (Sol) via the OpenAI Responses API — generates + retries in an isolated per-request VM/tmp workspace |
 | **Models** | GPT-5.6 **Sol** (generation/iteration) · GPT-5.6 **Luna** (triage: safety gate + grade tag + standard alignment) |
 | **Data** | Supabase (share links + gallery) |
 | **Sandbox** | Null-origin iframe · strict CSP (`connect-src 'none'`) · import allowlist · AST validation |

@@ -21,7 +21,7 @@ Chalkbox closes that gap. A teacher types the misconception she wants to break �
 
 **What makes it real is the loop no chatbot can run.** At product runtime, Codex (GPT-5.6) doesn't just describe a manipulative — it **writes** a single-file interactive React component, **runs it headlessly**, **asserts its interactive invariants hold** (a smoke test Codex also writes: dragging the divisor smaller must make the quotient bigger; a heavy and light ball must land together), **retries with the error trace** if it fails, and only **then publishes**. Nothing reaches a student that hasn't passed its own tests. That verification loop is the moat — and it's on camera.
 
-**Three surfaces, nothing more.** *Create* (the teacher types; an honest build timeline streams Codex writing, testing, and retrying with real timestamps). *Gallery* (a public, curriculum-tagged grid seeded with ~15 manipulatives, each showing its real Common Core / NGSS standard code and the exact prompt that generated it). *Student link* (phone-first, zero-chrome, the sim running in a locked-down sandboxed iframe).
+**Three surfaces, nothing more.** *Create* (the teacher types; an honest build timeline streams Codex writing, testing, and retrying with real timestamps). *Gallery* (a public, curriculum-tagged grid seeded with ~15 manipulatives, each showing its real Common Core / NGSS standard code and the exact prompt that generated it). *Student link* (phone-first, zero-chrome; generated sims served under a strict no-network CSP, with a cross-origin sandboxed-iframe host in progress).
 
 **Codex is load-bearing, not decorative.** The product is *runtime* code generation-and-verification for a person who cannot code. Remove Codex and Chalkbox cannot exist — a single chat completion can produce plausible-looking code but cannot execute it, test it, read the failure, and fix it. GPT-5.6 runs in two tiers: **Sol** generates and iterates the manipulative; **Luna** runs a fast, cheap triage on every prompt — a classroom-safety gate, grade-level tag, and alignment to a real curriculum standard — *before* a single generation credit is spent.
 
@@ -35,7 +35,7 @@ The insight the whole thing rests on: pedagogy is clear that manipulatives beat 
 
 This is a "build WITH Codex" event; the primitive to defend is the coding-agent workflow itself, used at runtime. Chalkbox uses it across (at least) three load-bearing surfaces:
 
-1. **Codex SDK (TypeScript) driving `codex` in a sandboxed per-request working dir** — the runtime engine that writes the component, runs the smoke test, and retries with the trace. This is the product.
+1. **GPT-5.6 (Sol) via the OpenAI Responses API, orchestrated by a harness Codex authored** — the runtime engine writes the component + its probe, runs the smoke test in an isolated per-request workspace, and retries with the trace. This is the product. (The harness itself was built end-to-end in a Codex CLI session — the submitted `/feedback` Session ID.)
 2. **GPT-5.6 Sol** (generation/iteration, high reasoning effort) for the one step where correctness is load-bearing — authoring and fixing interactive code.
 3. **GPT-5.6 Luna** (fast/cheap) for the per-prompt triage gate (safety + grade tag + standard alignment) that runs before any Sol credit is spent.
 4. **Codex CLI + IDE extension** as the build tooling — the primary `/feedback` thread *is* the generation pipeline, so the submitted Session ID genuinely covers the core work.
@@ -85,7 +85,7 @@ Thank you for taking the time to review Chalkbox. This was built for the teacher
 |---|---|---|
 | **Emotional Hook** — first sentence is one specific person's problem | ✅ | Ms. Alvarez, 9 PM Sunday, fraction division |
 | **Docs Distance** — NOT the canonical sponsor docs example | ✅ | Runtime Codex-as-generation-engine for non-coders w/ self-test loop appears in no quickstart (🟢, per spec) |
-| **Sponsor Defense** — "Why ONLY Codex" cites 3+ specific surfaces | ✅ | Codex SDK sandboxed dir + Sol + Luna + CLI/IDE; "remove Codex and you'd need N systems" |
+| **Sponsor Defense** — "Why ONLY Codex" cites 3+ specific surfaces | ✅ | Responses-API engine (Sol) + Luna gate + Codex-CLI build (Session ID); "remove Codex and you'd need N systems" |
 | **Honest Limitation** — ≥1 acknowledged gap | ✅ | Non-zero failure rate after retry (published, not hidden); math+physics only; smoke test ≠ pedagogical proof |
 | **Benchmark Proof** — reproducible p50/p95 | ☐ | `scripts/bench.ts` specced in COMPLEXITY.md; not built yet — no generation benchmark exists today. Do NOT cite p50/p95 numbers until the script runs. |
 | **Test Count** — exact count in README | ◐ | **8 harness unit tests + 24 E2E tests today** (validator, invariant runner, orchestrator). 100+ is the target once the engine lands — state the *real* count in the README, not the target. |

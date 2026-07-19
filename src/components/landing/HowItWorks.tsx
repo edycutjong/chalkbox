@@ -33,7 +33,7 @@ const GATES: Gate[] = [
   {
     id: "G4",
     title: "Output safety + publish",
-    detail: "A final safety pass, then it ships inside a network-severed, sandboxed iframe.",
+    detail: "A final safety pass, then it ships under a strict no-network CSP.",
     mono: "CSP connect-src 'none' · null origin",
   },
 ];
