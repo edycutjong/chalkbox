@@ -300,11 +300,7 @@ a:hover .brandmark-animated .brandmark-check,
   justify-content: center;
   border-radius: var(--radius-16);
   color: var(--primary);
-  background: linear-gradient(
-    135deg,
-    color-mix(in srgb, var(--primary) 20%, transparent),
-    color-mix(in srgb, var(--accent) 14%, transparent)
-  );
+  background: linear-gradient(135deg, rgba(20, 184, 166, 0.2), rgba(245, 158, 11, 0.14));
   border: 1px solid var(--border-subtle);
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06);
   transition:
@@ -381,7 +377,7 @@ button:hover .icon-nudge {
 }
 .chip:hover {
   color: var(--text-hi);
-  border-color: color-mix(in srgb, var(--primary) 45%, transparent);
+  border-color: rgba(20, 184, 166, 0.45);
   background: var(--color-hover);
   transform: translateY(-1px);
 }
@@ -391,7 +387,7 @@ button:hover .icon-nudge {
 .tab[aria-selected="true"] {
   background: var(--color-hover);
   color: var(--primary);
-  border-color: color-mix(in srgb, var(--primary) 45%, transparent);
+  border-color: rgba(20, 184, 166, 0.45);
 }
 
 /* Small rounded action pills (Copy link, Open, Remix, …) — color-agnostic */
@@ -422,11 +418,11 @@ button:hover .icon-nudge {
 .cta-accent:hover:not(:disabled) {
   filter: brightness(1.06);
   transform: translateY(-1px);
-  box-shadow: 0 8px 28px color-mix(in srgb, var(--accent) 35%, transparent);
+  box-shadow: 0 8px 28px rgba(245, 158, 11, 0.35);
 }
 .cta-accent:active:not(:disabled) {
   transform: translateY(0) scale(0.98);
-  box-shadow: 0 3px 12px color-mix(in srgb, var(--accent) 25%, transparent);
+  box-shadow: 0 3px 12px rgba(245, 158, 11, 0.25);
 }
 
 /* Text inputs — focus ring that matches the brand, not just the UA outline */
@@ -439,8 +435,8 @@ button:hover .icon-nudge {
     box-shadow var(--transition-fast);
 }
 .field:focus {
-  border-color: color-mix(in srgb, var(--primary) 70%, transparent);
-  box-shadow: 0 0 0 3px color-mix(in srgb, var(--primary) 18%, transparent);
+  border-color: rgba(20, 184, 166, 0.7);
+  box-shadow: 0 0 0 3px rgba(20, 184, 166, 0.18);
 }
 
 /* Quiet text links (footer) — brighten on hover */

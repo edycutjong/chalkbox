@@ -22,9 +22,7 @@ export function SubjectTag({ subject }: { subject: Subject }) {
     <span
       className="inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-semibold uppercase tracking-wide"
       style={{
-        background: isMath
-          ? "color-mix(in srgb, var(--primary) 18%, transparent)"
-          : "color-mix(in srgb, #fb7185 20%, transparent)",
+        background: isMath ? "rgba(20, 184, 166, 0.18)" : "rgba(251, 113, 133, 0.2)",
         color: isMath ? "var(--primary)" : "#fb7185",
       }}
     >

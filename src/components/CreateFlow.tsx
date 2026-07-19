@@ -287,9 +287,9 @@ export function CreateFlow() {
               data-testid="failure-card"
               className="rounded-2xl p-4 text-sm"
               style={{
-                background: "color-mix(in srgb, var(--color-error) 12%, transparent)",
+                background: "rgba(239, 68, 68, 0.12)",
                 color: "var(--text-hi)",
-                border: "1px solid color-mix(in srgb, var(--color-error) 40%, transparent)",
+                border: "1px solid rgba(239, 68, 68, 0.4)",
               }}
             >
               {rejectReason} Try rephrasing it as a math or physics idea.

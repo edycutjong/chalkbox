@@ -27,7 +27,9 @@ export default function GalleryPage() {
             Every card shows the real curriculum standard and the exact sentence a teacher typed to
             make it — the product&rsquo;s core claim, demonstrated 15 times over.
           </p>
-          <ScopeBadge />
+          <div>
+            <ScopeBadge />
+          </div>
         </div>
         <GalleryGrid />
       </section>
