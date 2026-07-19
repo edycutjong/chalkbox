@@ -1,3 +1,10 @@
+## [1.2.6](https://github.com/edycutjong/chalkbox/compare/v1.2.5...v1.2.6) (2026-07-19)
+
+
+### Bug Fixes
+
+* **design:** purge color-mix from the entire project — alpha-stripping fallback made tints opaque ([e55e13c](https://github.com/edycutjong/chalkbox/commit/e55e13cc905de7af65bbceb94a080a484dcac6b3))
+
 ## [1.2.5](https://github.com/edycutjong/chalkbox/compare/v1.2.4...v1.2.5) (2026-07-19)
 
 
