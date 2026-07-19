@@ -33,7 +33,7 @@
 <div align="center">
   <a href="https://chalkbox.edycu.dev">
   </a>
-  <img src="docs/assets/devpost-gallery.png" alt="The sim tests itself before a student ever sees it" width="100%">
+  <img src="docs/devpost-gallery.png" alt="The sim tests itself before a student ever sees it" width="100%">
 </div>
 
 > **A teacher types a misconception → Codex writes a manipulative, runs its own smoke test, retries on failure, and only then publishes → a student opens it on any phone.** Nothing untested reaches a child.
