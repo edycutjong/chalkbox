@@ -1,3 +1,10 @@
+## [1.2.3](https://github.com/edycutjong/chalkbox/compare/v1.2.2...v1.2.3) (2026-07-19)
+
+
+### Bug Fixes
+
+* **engine:** make the real generation path actually work end-to-end ([7d7c1bf](https://github.com/edycutjong/chalkbox/commit/7d7c1bf67411b95dda5dfe736ec4953cc7c9aa6b))
+
 ## [1.2.2](https://github.com/edycutjong/chalkbox/compare/v1.2.1...v1.2.2) (2026-07-19)
 
 
