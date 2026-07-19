@@ -8,7 +8,7 @@
 
   <br/><br/>
 
-  [![Live Demo](https://img.shields.io/badge/🚀_Live-chalkbox.edycu.dev-14b8a6?style=for-the-badge)](https://chalkbox.edycu.dev)
+  [![Live Demo](https://img.shields.io/badge/🚀_Live-chalkbox--theta.vercel.app-14b8a6?style=for-the-badge)](https://chalkbox-theta.vercel.app)
   [![Pitch Video](https://img.shields.io/badge/🎬_Demo-Video-ef4444?style=for-the-badge)](#-demo-video)
   [![Built for OpenAI Build Week](https://img.shields.io/badge/OpenAI-Build_Week_2026-8b5cf6?style=for-the-badge)](https://openai.devpost.com)
 
@@ -31,7 +31,7 @@
 ## 📸 See it in Action
 
 <div align="center">
-  <a href="https://chalkbox.edycu.dev">
+  <a href="https://chalkbox-theta.vercel.app">
   </a>
   <img src="docs/devpost-gallery.png" alt="The sim tests itself before a student ever sees it" width="100%">
 </div>
@@ -104,7 +104,7 @@ Live generation activates only with `OPENAI_API_KEY` present **and** `CHALKBOX_D
 
 ## 🚀 Getting Started
 
-> **For Judges:** the seeded gallery at [chalkbox.edycu.dev](https://chalkbox.edycu.dev) is browsable with zero setup — no login.
+> **For Judges:** the seeded gallery at [chalkbox-theta.vercel.app](https://chalkbox-theta.vercel.app) is browsable with zero setup — no login.
 >
 > **Current status — runnable skeleton in demo mode.** The Create flow replays the flagship fraction-division build end-to-end (prompt → self-test → published share link) with no API keys. The harness it exercises is **real and unit-tested**: the static validator (import allowlist / no-network) and the interactive-invariant runner both work and pass. The live Codex-driven generation engine (arbitrary prompt → new verified sim) is the next milestone and drops in behind the `// STUB:` seams in `src/lib/harness/orchestrator.ts`.
 
@@ -196,7 +196,12 @@ chalkbox/
 
 ## 🎬 Demo Video
 
-_Link added before submission — a ≤3-min narrated walkthrough with the self-test loop as the centerpiece. Script in [`docs/SUBMISSION.md`](docs/SUBMISSION.md)._
+<div align="center">
+  <a href="https://youtu.be/_JGTRZTHvOw">
+    <img src="https://i.ytimg.com/vi/_JGTRZTHvOw/maxresdefault.jpg" alt="Chalkbox demo — a sentence becomes a self-tested manipulative (2:53)" width="100%">
+  </a>
+  <p><strong><a href="https://youtu.be/_JGTRZTHvOw">▶ Watch the 3-minute demo</a></strong> — a genuine live generation on camera (Codex writes → self-tests → Verified · Published), the fail→fix→verified loop, and the student view.</p>
+</div>
 
 ---
 
