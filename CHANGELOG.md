@@ -1,3 +1,10 @@
+## [1.2.1](https://github.com/edycutjong/chalkbox/compare/v1.2.0...v1.2.1) (2026-07-19)
+
+
+### Bug Fixes
+
+* **bench:** add vite.config.ts so vite-node resolves the @/ path alias ([2a1479b](https://github.com/edycutjong/chalkbox/commit/2a1479b3ad530b406a33370045b5a21eba41b5f9))
+
 # [1.2.0](https://github.com/edycutjong/chalkbox/compare/v1.1.0...v1.2.0) (2026-07-19)
 
 
