@@ -316,7 +316,7 @@ function generationRequest(
 ): Record<string, unknown> {
   return {
     model: "gpt-5.6-sol",
-    reasoning: { effort: "high" },
+    reasoning: { effort: "medium" },
     input: [
       {
         role: "developer",
@@ -328,7 +328,14 @@ function generationRequest(
           "same test IDs and equations as the component. Every test ID named by the probe or render invariants " +
           "must be a data-testid in componentSrc. Never use network, browser storage, eval, require, timers, or " +
           "randomness. Provide a concrete InvariantSpec with at least render, response, and one pedagogy-specific " +
-          "monotonic, bounds, conservation, or determinism invariant. The probe will be executed for real.",
+          "monotonic, bounds, conservation, or determinism invariant. Use EXACTLY this invariant schema — the " +
+          'discriminator field is "kind" (NEVER "type"). render = {kind:"render", id, requireTestIds:[...]}. ' +
+          "response|monotonic|bounds|conservation|determinism each = {kind, id, drive:[{action,target,value}], " +
+          'observe:{probe}} plus: monotonic adds direction:"increasing"|"decreasing"; bounds adds min,max; ' +
+          'conservation adds epsilon; determinism adds seed. action is "setSlider"|"drag"|"tick"|"click"; ' +
+          "target is a data-testid; observe.probe is the exact name passed to the probe's read(). The whole object " +
+          'is { "version":"1.0", "renderProbe":{"rootTestId":<root data-testid>}, "invariants":[...] }. ' +
+          "The probe will be executed for real.",
       },
       {
         role: "user",
@@ -376,20 +383,37 @@ function parseGeneratedPackage(text: string): GeneratedSimPackage {
   ) {
     throw new Error("Sol response omitted a required generated artifact");
   }
-  assertInvariantSpec(generated.invariants);
+  normalizeInvariantSpec(generated.invariants as unknown as Record<string, unknown>);
   return generated as GeneratedSimPackage;
 }
 
-function assertInvariantSpec(value: unknown): asserts value is GeneratedSimPackage["invariants"] {
-  const spec = value as Partial<GeneratedSimPackage["invariants"]>;
-  if (
-    spec.version !== "1.0" ||
-    !spec.renderProbe ||
-    typeof spec.renderProbe.rootTestId !== "string" ||
-    !Array.isArray(spec.invariants) ||
-    spec.invariants.length === 0
-  ) {
-    throw new Error("Sol response contained an invalid invariant spec");
+/**
+ * Lenient normaliser. Sol reliably emits the invariant list but sometimes omits the
+ * `version` tag or the `renderProbe` wrapper. Rather than hard-fail here (which would
+ * strand the whole generation), we default those so a well-formed-enough spec reaches
+ * the REAL render + G3 invariant gates — which retry-with-trace on any mismatch.
+ */
+function normalizeInvariantSpec(spec: Record<string, unknown>): void {
+  const invariants = spec.invariants;
+  if (!Array.isArray(invariants) || invariants.length === 0) {
+    throw new Error("Sol response contained no invariants");
+  }
+  // Sol occasionally labels the discriminator "type" instead of the runner's "kind".
+  for (const inv of invariants) {
+    if (inv && typeof inv === "object") {
+      const item = inv as Record<string, unknown>;
+      if (item.kind == null && typeof item.type === "string") item.kind = item.type;
+    }
+  }
+  spec.version = "1.0";
+  const renderProbe = spec.renderProbe as { rootTestId?: unknown } | undefined;
+  if (!renderProbe || typeof renderProbe.rootTestId !== "string") {
+    const renderInvariant = invariants.find(
+      (inv): inv is { requireTestIds?: string[] } =>
+        !!inv && typeof inv === "object" && (inv as { kind?: string }).kind === "render",
+    );
+    const derived = renderInvariant?.requireTestIds?.[0] ?? "manipulative-root";
+    spec.renderProbe = { rootTestId: derived };
   }
 }
 

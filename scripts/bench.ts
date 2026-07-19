@@ -74,6 +74,23 @@ for (let i = 0; i < count; i++) {
       latencyMs: result.latencyMs.total,
     }),
   );
+  if (!isFallback && result.status !== "published") {
+    for (const a of result.attempts) {
+      console.log(
+        `  attempt ${a.n}: ${a.outcome}` +
+          (a.validation && !a.validation.ok
+            ? ` · G2 ${a.validation.violations.map((v) => v.rule).join(",")}`
+            : "") +
+          (a.render && !a.render.ok ? ` · render: ${a.render.error}` : "") +
+          (a.invariantRun?.results
+            ? ` · G3 failing: ${a.invariantRun.results
+                .filter((r) => !r.passed)
+                .map((r) => `${r.id}(${r.error ?? "?"})`)
+                .join("; ")}`
+            : ""),
+      );
+    }
+  }
 }
 
 realLatencies.sort((a, b) => a - b);

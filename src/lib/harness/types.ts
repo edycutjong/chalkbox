@@ -205,6 +205,6 @@ export interface GenerationBudget {
 export const DEFAULT_BUDGET: GenerationBudget = {
   maxAttempts: 4,
   maxTokens: 120_000,
-  maxWallClockMs: 90_000,
-  perAttemptTimeoutMs: 45_000,
+  maxWallClockMs: 240_000,
+  perAttemptTimeoutMs: 90_000,
 };
