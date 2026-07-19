@@ -1,3 +1,10 @@
+## [1.2.2](https://github.com/edycutjong/chalkbox/compare/v1.2.1...v1.2.2) (2026-07-19)
+
+
+### Bug Fixes
+
+* **bench:** gate on LIVE_GENERATION_ENABLED + detect silent stub fallback ([261dbbe](https://github.com/edycutjong/chalkbox/commit/261dbbe3ffe1c7b754e25703d905c3d0ee90834d))
+
 ## [1.2.1](https://github.com/edycutjong/chalkbox/compare/v1.2.0...v1.2.1) (2026-07-19)
 
 
