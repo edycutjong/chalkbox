@@ -5,8 +5,6 @@ import Link from "next/link";
 import { ScopeBadge } from "@/components/Badges";
 import { SimFrame } from "@/components/SimFrame";
 import { HERO_SIM, resolveInteractiveSim, type GallerySim } from "@/lib/seed/gallery";
-import { gatePrompt } from "@/lib/harness/safety";
-import { StubOrchestrator } from "@/lib/harness/orchestrator";
 import { formatViolations } from "@/lib/harness/validator";
 import { formatInvariantFailures } from "@/lib/harness/invariant-runner";
 import type { GenerationResult, SafetyVerdict } from "@/lib/harness/types";
@@ -29,8 +27,6 @@ interface Step {
 
 type Phase = "idle" | "running" | "published" | "rejected" | "unsupported";
 
-const orchestrator = new StubOrchestrator();
-
 function stamp(): string {
   return new Date().toLocaleTimeString("en-US", {
     hour12: false,
@@ -41,6 +37,52 @@ function stamp(): string {
 }
 
 const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
+
+interface GenerationStream {
+  verdict: SafetyVerdict | null;
+  demo: boolean;
+  result: GenerationResult | null;
+}
+
+async function requestGeneration(prompt: string): Promise<GenerationStream> {
+  const response = await fetch("/api/generate", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ prompt }),
+  });
+  if (!response.ok || !response.body) throw new Error("Generation service is unavailable.");
+  const reader = response.body.getReader();
+  const decoder = new TextDecoder();
+  let buffer = "";
+  const stream: GenerationStream = { verdict: null, demo: true, result: null };
+  while (true) {
+    const { value, done } = await reader.read();
+    buffer += decoder.decode(value, { stream: !done });
+    let boundary = buffer.indexOf("\n\n");
+    while (boundary >= 0) {
+      const message = buffer.slice(0, boundary);
+      buffer = buffer.slice(boundary + 2);
+      const event = message.match(/^event: (.+)$/m)?.[1];
+      const data = message.match(/^data: (.+)$/m)?.[1];
+      if (event && data) {
+        const payload: unknown = JSON.parse(data);
+        if (event === "verdict" && payload && typeof payload === "object") {
+          const value = payload as { verdict?: SafetyVerdict; demo?: boolean };
+          stream.verdict = value.verdict ?? null;
+          stream.demo = value.demo === true;
+        }
+        if (event === "result") stream.result = payload as GenerationResult;
+        if (event === "error") {
+          const value = payload as { message?: string };
+          throw new Error(value.message ?? "Generation failed.");
+        }
+      }
+      boundary = buffer.indexOf("\n\n");
+    }
+    if (done) break;
+  }
+  return stream;
+}
 
 export function CreateFlow() {
   const [prompt, setPrompt] = useState("");
@@ -77,11 +119,26 @@ export function CreateFlow() {
     setVerdict(null);
     setBuiltSim(null);
 
-    // G1 — Luna classroom-safety + standard alignment (demo heuristic).
-    const v = gatePrompt(text);
     setPhase("running");
     pushStep({ id: "g1", label: "Checking it's classroom-ready…", state: "active" });
-    await sleep(650);
+    let stream: GenerationStream;
+    try {
+      stream = await requestGeneration(text);
+    } catch (error) {
+      const detail = error instanceof Error ? error.message : "Generation failed.";
+      settleLast("fail", detail);
+      setRejectReason(detail);
+      setPhase("rejected");
+      runningRef.current = false;
+      return;
+    }
+    const v = stream.verdict;
+    if (!v) {
+      settleLast("fail", "Generation did not return a classroom-safety verdict.");
+      setPhase("rejected");
+      runningRef.current = false;
+      return;
+    }
     if (v.decision === "reject") {
       settleLast("fail", v.reasons.join(" "));
       setRejectReason(v.reasons.join(" "));
@@ -95,24 +152,24 @@ export function CreateFlow() {
     );
     setVerdict(v);
 
-    // Prompt-honesty gate: only generate when we actually have a LIVE sim for
-    // this prompt. Otherwise show an honest "coming soon" state — never fake the
-    // flagship build trace for a prompt whose subject it doesn't match.
-    const sim = resolveInteractiveSim(text, v.subject);
-    if (!sim) {
+    // In demo mode we keep the existing prompt-honesty rule. In live mode the
+    // server has generated a new artifact, so it must not be replaced by the
+    // flagship merely because it isn't in the seed gallery.
+    const sim = stream.demo ? resolveInteractiveSim(text, v.subject) : null;
+    if (stream.demo && !sim) {
       setPhase("unsupported");
       runningRef.current = false;
       return;
     }
     setBuiltSim(sim);
 
-    // Run the real (stub) orchestrator to get the honest multi-attempt trace.
-    const gen = await orchestrator.run({
-      prompt: text,
-      subject: v.subject ?? "math",
-      gradeBand: v.gradeBand,
-      standard: v.standard,
-    });
+    const gen = stream.result;
+    if (!gen) {
+      settleLast("fail", "Generation ended without a result.");
+      setPhase("rejected");
+      runningRef.current = false;
+      return;
+    }
 
     // Render EACH attempt straight from the orchestrator's REAL data — the
     // static-validator violations and the invariant-runner results — so the
@@ -350,13 +407,19 @@ export function CreateFlow() {
 
       {phase === "published" && result && (
         <div className="flex flex-col gap-5" data-testid="result-state">
-          <SimFrame sim={builtSim ?? HERO_SIM} />
+          {builtSim ? (
+            <SimFrame sim={builtSim ?? HERO_SIM} />
+          ) : (
+            <GeneratedArtifact result={result} />
+          )}
           <p
             className="text-center text-xs"
             style={{ color: "var(--text-low)" }}
             data-testid="demo-label"
           >
-            Demo mode — replaying a pre-built, self-tested example.
+            {builtSim
+              ? "Demo mode — replaying a pre-built, self-tested example."
+              : "Live mode — server-verified generated artifact; source is SRI-pinned before publishing."}
           </p>
           <div className="glass flex flex-col gap-3 rounded-2xl p-5 sm:flex-row sm:items-center sm:justify-between">
             <div className="flex flex-col">
@@ -401,6 +464,29 @@ export function CreateFlow() {
           </div>
         </div>
       )}
+    </div>
+  );
+}
+
+function GeneratedArtifact({ result }: { result: GenerationResult }) {
+  return (
+    <div className="glass flex flex-col gap-3 rounded-2xl p-6" data-testid="generated-artifact">
+      <span
+        className="text-xs font-semibold uppercase tracking-widest"
+        style={{ color: "var(--primary)" }}
+      >
+        Generated manipulative verified server-side
+      </span>
+      <p className="text-sm" style={{ color: "var(--text-mid)" }}>
+        The component was headlessly rendered and its matching probe passed the displayed
+        invariants.
+      </p>
+      <pre
+        className="max-h-56 overflow-auto rounded-xl p-3 text-xs"
+        style={{ background: "var(--bg-overlay)" }}
+      >
+        {result.artifact?.componentSrc}
+      </pre>
     </div>
   );
 }

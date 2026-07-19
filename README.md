@@ -1,11 +1,14 @@
 <div align="center">
   <h1>Chalkbox 🖍️</h1>
   <p><em>Type the misconception; get a self-tested interactive manipulative in two minutes.</em></p>
-  <img src="docs/assets/readme-hero.png" alt="Chalkbox — interactive manipulatives, conjured by a teacher's sentence" width="100%">
+  <a href="https://chalkbox-theta.vercel.app">
+    <img src="docs/assets/hero-animated.svg" alt="Chalkbox — a teacher's sentence becomes a self-tested interactive manipulative: prompt → Codex writes code → test fails → Codex fixes it → Verified ✓ → Published" width="100%">
+  </a>
+  <sub><em>Animation not moving? Some viewers (VS Code / offline) show a still frame — <a href="docs/assets/readme-hero.png">static hero here</a>.</em></sub>
 
   <br/><br/>
 
-  [![Live Demo](https://img.shields.io/badge/🚀_Live-chalkbox.edycu.dev-14b8a6?style=for-the-badge)](https://chalkbox.edycu.dev)
+  [![Live Demo](https://img.shields.io/badge/🚀_Live-chalkbox--theta.vercel.app-14b8a6?style=for-the-badge)](https://chalkbox-theta.vercel.app)
   [![Pitch Video](https://img.shields.io/badge/🎬_Demo-Video-ef4444?style=for-the-badge)](#-demo-video)
   [![Built for OpenAI Build Week](https://img.shields.io/badge/OpenAI-Build_Week_2026-8b5cf6?style=for-the-badge)](https://openai.devpost.com)
 
@@ -83,13 +86,23 @@ Full design in [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) · complexity blue
 
 ## 🤝 Where Codex Accelerated
 
-> Populated from the primary Codex CLI session (the `/feedback` Session ID submitted with this project). This section quotes the real decision points where Codex authored, tested, and iterated the generation pipeline — filled in as the build progresses.
+> Built in a single primary Codex CLI session — **`/feedback` Thread ID: `019f79dc-8393-7003-b79f-0e8075dfb4dd`** (submitted with this project). GPT‑5.6 **Sol** authored the runtime generation engine end-to-end; GPT‑5.6 **Luna** runs the cheap safety triage.
+
+The product's moat — the runtime write → self-test → retry → publish loop — was authored by Codex in one session:
+
+- **`RealOrchestrator` (`src/lib/harness/orchestrator.ts`)** — Codex wrote the full generation loop behind the existing `GenerationOrchestrator` interface, leaving the demo `StubOrchestrator` untouched so the keyless demo path still works.
+- **Coupled component + probe (`src/lib/harness/generated-sim.ts`)** — the key design call: Sol must emit *both* a restricted React component *and* an executable `SimProbe`. The server renders the component headlessly, verifies every probe test-id actually appears in the rendered markup, then drives the **real** G3 invariant runner against it — so a generated sim can't fake its own test.
+- **Server-only SSE route (`src/app/api/generate/route.ts`)** — all key-bearing generation moved server-side and each attempt streamed to the client, so the OpenAI key never reaches the browser.
+- **Budget + safety** — `checkBudget()` gates every Sol round (attempts / tokens / wall-clock ceiling); `gpt‑5.6‑luna` runs the G1/G4 safety pass. Validation, render, invariant, and safety failures are fed back to Sol as retry traces.
+- **`scripts/bench.ts`** — a reproducible p50/p95 latency + success-rate harness (`npm run bench -- N`).
+
+Live generation activates only with `OPENAI_API_KEY` present **and** `CHALKBOX_DEMO_MODE=false`; a missing key or an API error falls back cleanly to the stub.
 
 ---
 
 ## 🚀 Getting Started
 
-> **For Judges:** the seeded gallery at [chalkbox.edycu.dev](https://chalkbox.edycu.dev) is browsable with zero setup — no login.
+> **For Judges:** the seeded gallery at [chalkbox-theta.vercel.app](https://chalkbox-theta.vercel.app) is browsable with zero setup — no login.
 >
 > **Current status — runnable skeleton in demo mode.** The Create flow replays the flagship fraction-division build end-to-end (prompt → self-test → published share link) with no API keys. The harness it exercises is **real and unit-tested**: the static validator (import allowlist / no-network) and the interactive-invariant runner both work and pass. The live Codex-driven generation engine (arbitrary prompt → new verified sim) is the next milestone and drops in behind the `// STUB:` seams in `src/lib/harness/orchestrator.ts`.
 
@@ -173,9 +186,9 @@ chalkbox/
 ## 🎯 Scope & Honest Limitations
 
 - **Math and physics manipulatives only** — stated proudly. That discipline is why the generation loop can be hardened enough to trust with 32 kids.
-- **Runtime generation has real latency and a non-zero failure rate** even after retry. When the live engine lands, its true success rate will be published via a reproducible `scripts/bench.ts` rather than hidden — and the seeded gallery means a judge never *needs* a live generation to succeed to evaluate the product.
+- **Runtime generation has real latency and a non-zero failure rate** even after retry. The live engine is implemented (`RealOrchestrator`); its true success rate is measured by `scripts/bench.ts` with a live key rather than hidden — and the seeded gallery means a judge never *needs* a live generation to succeed to evaluate the product.
 - A passing smoke test asserts interactive invariants, not a formal proof of pedagogical soundness.
-- **What's real today:** the validator + invariant runner + spend-guard budget ceiling + the flagship fraction-division sim (21 unit tests, 26 E2E tests, all green). **What's stubbed today:** the Codex generation engine, Supabase persistence, magic-link auth, the cross-origin sandboxed-iframe host, and the SSE verify stream — each honestly marked `// STUB:` in source. No generation benchmark exists yet.
+- **What's real today:** the runtime Codex generation engine — `RealOrchestrator` (write → headless render → interactive-invariant self-test → retry-with-trace → publish, `gpt‑5.6‑sol` + `gpt‑5.6‑luna`), the SSE generation route, the static validator + invariant runner + spend-guard budget ceiling, and the flagship fraction-division sim (**24 unit tests + 26 E2E, all green in demo mode**). **What's still stubbed:** Supabase persistence, magic-link auth, and the cross-origin sandboxed-iframe host that renders a *newly-generated* sim interactively in the student's browser (generated sims are currently server-verified and their source shown, not yet executed client-side) — each honestly marked `// STUB:` in source.
 
 ---
 

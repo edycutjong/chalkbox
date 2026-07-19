@@ -29,7 +29,7 @@ const TRACE: TraceLine[] = [
 ];
 
 const FACTS: { value: string; label: string }[] = [
-  { value: "47", label: "unit + E2E tests green" },
+  { value: "50", label: "unit + E2E tests green" },
   { value: "6-stage", label: "CI: quality → deploy" },
   { value: "15", label: "curriculum-tagged sims" },
   { value: "MIT", label: "open source" },

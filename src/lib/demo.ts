@@ -16,5 +16,12 @@ export const DEMO_MODE: boolean =
   process.env.CHALKBOX_DEMO_MODE === "true" ||
   (!process.env.OPENAI_API_KEY && process.env.CHALKBOX_DEMO_MODE !== "false");
 
+/**
+ * Unlike the legacy demo-display flag above, spending is an explicit opt-in:
+ * a key alone can never activate the real engine.
+ */
+export const LIVE_GENERATION_ENABLED: boolean =
+  Boolean(process.env.OPENAI_API_KEY) && process.env.CHALKBOX_DEMO_MODE === "false";
+
 /** A short, honest banner shown wherever demo data is served. */
 export const DEMO_NOTICE = "Demo mode — pre-seeded build trace, no live Codex/Supabase call.";

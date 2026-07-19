@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512" role="img" aria-label="Chalkbox animated icon: a self-test check draws itself inside the sandbox box">
+  <!-- CHALKBOX animated app icon (SMIL, self-contained).
+       Builds on public/icon.svg: the box = the sandboxed sim; the chalk
+       check = the headless self-test that must pass before publish.
+       The check draws itself on a gentle loop, the publish spark pulses,
+       and the box breathes a soft glow. Survives GitHub's camo proxy.
+       (No double-hyphen sequences in this comment; XML forbids them.) -->
+  <defs>
+    <linearGradient id="brand" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#14B8A6"/>
+      <stop offset="100%" stop-color="#F59E0B"/>
+    </linearGradient>
+    <linearGradient id="sheen" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#F8FAFC" stop-opacity="0.18"/>
+      <stop offset="45%" stop-color="#F8FAFC" stop-opacity="0"/>
+    </linearGradient>
+    <filter id="softDrop" x="-40%" y="-40%" width="180%" height="180%">
+      <feDropShadow dx="0" dy="10" stdDeviation="18" flood-color="#14B8A6" flood-opacity="0.45"/>
+    </filter>
+    <filter id="glowBlur" x="-60%" y="-60%" width="220%" height="220%">
+      <feGaussianBlur stdDeviation="14"/>
+    </filter>
+  </defs>
+
+  <!-- breathing brand glow behind the box -->
+  <rect x="64" y="64" width="384" height="384" rx="96" fill="url(#brand)" filter="url(#glowBlur)" opacity="0.5">
+    <animate attributeName="opacity" dur="3.6s" repeatCount="indefinite" values="0.32;0.6;0.32"/>
+  </rect>
+
+  <!-- the box: rounded square in brand gradient -->
+  <g filter="url(#softDrop)">
+    <rect x="64" y="64" width="384" height="384" rx="96" fill="url(#brand)"/>
+    <rect x="64" y="64" width="384" height="384" rx="96" fill="url(#sheen)"/>
+  </g>
+
+  <!-- the self-test check: chalk backing stroke (static) -->
+  <path d="M 148 272 L 228 352 L 366 176" fill="none" stroke="#020617" stroke-width="72" stroke-linecap="round" stroke-linejoin="round" opacity="0.92"/>
+
+  <!-- the check draws itself on a loop, then holds, then re-draws -->
+  <path d="M 148 272 L 228 352 L 366 176" fill="none" stroke="#F8FAFC" stroke-width="46" stroke-linecap="round" stroke-linejoin="round"
+        stroke-dasharray="360" stroke-dashoffset="360">
+    <animate attributeName="stroke-dashoffset" dur="4s" repeatCount="indefinite"
+             keyTimes="0;0.28;0.9;1" values="360;0;0;360"/>
+  </path>
+
+  <!-- publish spark: the verified sim leaving the box, pulses on completion -->
+  <g>
+    <circle cx="396" cy="140" r="26" fill="#F8FAFC"/>
+    <circle cx="396" cy="140" r="26" fill="url(#brand)" opacity="0.25"/>
+    <circle cx="396" cy="140" r="26" fill="none" stroke="#F8FAFC" stroke-width="4" opacity="0">
+      <animate attributeName="r" dur="4s" repeatCount="indefinite" keyTimes="0;0.3;0.55;1" values="26;26;54;54"/>
+      <animate attributeName="opacity" dur="4s" repeatCount="indefinite" keyTimes="0;0.3;0.35;0.6;1" values="0;0;0.8;0;0"/>
+    </circle>
+  </g>
+</svg>

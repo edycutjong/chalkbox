@@ -10,6 +10,7 @@
  */
 
 import type { SafetyVerdict, StandardRef } from "./types";
+import { createResponse } from "./openai-responses";
 
 const MATH_HINTS = [
   "fraction",
@@ -119,5 +120,134 @@ export function gateOutput(renderedText: string[]): SafetyVerdict {
     standard: null,
     toxicity: 0.0,
     offCurriculum: false,
+  };
+}
+
+/**
+ * Live G1/G4 safety pass. These are intentionally server-only call sites:
+ * CreateFlow never imports them, so an API key can never reach the browser.
+ * The synchronous functions above remain the deterministic demo implementation.
+ */
+export async function gatePromptWithLuna(
+  prompt: string,
+  apiKey: string,
+  timeoutMs: number,
+): Promise<SafetyVerdict> {
+  const fallback = gatePrompt(prompt);
+  const result = await createResponse(
+    apiKey,
+    {
+      model: "gpt-5.6-luna",
+      reasoning: { effort: "low" },
+      input: [
+        {
+          role: "developer",
+          content:
+            "You are Chalkbox's classroom safety classifier. Return only the requested JSON. " +
+            "Accept only age-appropriate math or physics manipulative requests.",
+        },
+        { role: "user", content: prompt },
+      ],
+      text: { format: safetyFormat() },
+    },
+    timeoutMs,
+  );
+  return parseVerdict(result.text, fallback);
+}
+
+export async function gateOutputWithLuna(
+  renderedText: string[],
+  apiKey: string,
+  timeoutMs: number,
+): Promise<SafetyVerdict> {
+  const fallback = gateOutput(renderedText);
+  const result = await createResponse(
+    apiKey,
+    {
+      model: "gpt-5.6-luna",
+      reasoning: { effort: "low" },
+      input: [
+        {
+          role: "developer",
+          content:
+            "You are Chalkbox's final classroom-output safety scanner. Return only the requested JSON. " +
+            "Reject unsafe, off-curriculum, or non-math/non-physics labels.",
+        },
+        { role: "user", content: renderedText.join(" ") },
+      ],
+      text: { format: safetyFormat() },
+    },
+    timeoutMs,
+  );
+  return parseVerdict(result.text, fallback);
+}
+
+function safetyFormat(): Record<string, unknown> {
+  return {
+    type: "json_schema",
+    name: "chalkbox_safety_verdict",
+    strict: true,
+    schema: {
+      type: "object",
+      additionalProperties: false,
+      required: [
+        "decision",
+        "reasons",
+        "gradeBand",
+        "subject",
+        "standard",
+        "toxicity",
+        "offCurriculum",
+      ],
+      properties: {
+        decision: { type: "string", enum: ["accept", "reject"] },
+        reasons: { type: "array", items: { type: "string" } },
+        gradeBand: { type: ["string", "null"], enum: ["K-2", "3-5", "6-8", "9-12", null] },
+        subject: { type: ["string", "null"], enum: ["math", "physics", null] },
+        standard: {
+          type: ["object", "null"],
+          additionalProperties: false,
+          required: ["framework", "code"],
+          properties: {
+            framework: { type: "string", enum: ["CCSS", "NGSS"] },
+            code: { type: "string" },
+          },
+        },
+        toxicity: { type: "number" },
+        offCurriculum: { type: "boolean" },
+      },
+    },
+  };
+}
+
+function parseVerdict(text: string, fallback: SafetyVerdict): SafetyVerdict {
+  const parsed: unknown = JSON.parse(text);
+  if (!parsed || typeof parsed !== "object") return fallback;
+  const value = parsed as Partial<SafetyVerdict>;
+  if (value.decision !== "accept" && value.decision !== "reject") return fallback;
+  if (!Array.isArray(value.reasons) || typeof value.toxicity !== "number") return fallback;
+  if (typeof value.offCurriculum !== "boolean") return fallback;
+  return {
+    decision: value.decision,
+    reasons: value.reasons.filter((reason): reason is string => typeof reason === "string"),
+    gradeBand:
+      value.gradeBand === "K-2" ||
+      value.gradeBand === "3-5" ||
+      value.gradeBand === "6-8" ||
+      value.gradeBand === "9-12"
+        ? value.gradeBand
+        : null,
+    subject: value.subject === "math" || value.subject === "physics" ? value.subject : null,
+    standard:
+      value.standard &&
+      typeof value.standard === "object" &&
+      "framework" in value.standard &&
+      "code" in value.standard &&
+      (value.standard.framework === "CCSS" || value.standard.framework === "NGSS") &&
+      typeof value.standard.code === "string"
+        ? { framework: value.standard.framework, code: value.standard.code }
+        : null,
+    toxicity: Math.max(0, Math.min(1, value.toxicity)),
+    offCurriculum: value.offCurriculum,
   };
 }
