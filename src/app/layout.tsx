@@ -45,6 +45,16 @@ export const metadata: Metadata = {
     "Common Core",
     "NGSS",
   ],
+  authors: [{ name: "Edy Cu", url: "https://chalkbox.edycu.dev" }],
+  creator: "Edy Cu",
+  publisher: "Chalkbox",
+  category: "education",
+  alternates: { canonical: "/" },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: { index: true, follow: true, "max-image-preview": "large" },
+  },
   icons: {
     icon: [
       { url: "/icon.svg", type: "image/svg+xml" },
@@ -63,6 +73,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
+    site: "@edycutjong",
+    creator: "@edycutjong",
     title: TITLE,
     description: DESCRIPTION,
     images: ["/og-image.png"],
