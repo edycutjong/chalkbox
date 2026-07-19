@@ -1,3 +1,10 @@
+# [1.2.0](https://github.com/edycutjong/chalkbox/compare/v1.1.0...v1.2.0) (2026-07-19)
+
+
+### Features
+
+* **seo:** complete metadata + fix devpost-gallery retry-arc alignment ([135b52f](https://github.com/edycutjong/chalkbox/commit/135b52f730588a307cadd5406dfbb87f3317fff5))
+
 # [1.1.0](https://github.com/edycutjong/chalkbox/compare/v1.0.0...v1.1.0) (2026-07-19)
 
 
