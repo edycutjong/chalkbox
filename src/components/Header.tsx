@@ -12,19 +12,13 @@ export function Header() {
           className="flex items-center gap-4 text-sm sm:gap-7"
           style={{ color: "var(--text-mid)" }}
         >
-          <Link
-            href="/#how"
-            className="hidden transition-colors hover:text-[var(--text-hi)] sm:inline"
-          >
+          <Link href="/#how" className="link-quiet hidden sm:inline">
             How it works
           </Link>
-          <Link href="/#gallery" className="transition-colors hover:text-[var(--text-hi)]">
+          <Link href="/#gallery" className="link-quiet">
             Gallery
           </Link>
-          <Link
-            href="/#faq"
-            className="hidden transition-colors hover:text-[var(--text-hi)] sm:inline"
-          >
+          <Link href="/#faq" className="link-quiet hidden sm:inline">
             FAQ
           </Link>
         </nav>

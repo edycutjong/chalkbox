@@ -26,12 +26,7 @@ export function GalleryGrid() {
             role="tab"
             aria-selected={subject === f}
             onClick={() => setSubject(f)}
-            className="rounded-full px-4 py-1.5 text-sm font-medium capitalize transition-colors"
-            style={{
-              background: subject === f ? "var(--color-hover)" : "var(--bg-overlay)",
-              color: subject === f ? "var(--primary)" : "var(--text-mid)",
-              border: "1px solid var(--border-subtle)",
-            }}
+            className="chip tab rounded-full px-4 py-1.5 text-sm font-medium capitalize"
           >
             {f}
           </button>
@@ -92,15 +87,15 @@ function SimCard({ sim }: { sim: GallerySim }) {
         </span>
         <div className="flex gap-2">
           <Link
-            href="/"
-            className="rounded-full px-3 py-1 text-xs font-medium"
+            href="/#create"
+            className="pill rounded-full px-3 py-1 text-xs font-medium"
             style={{ border: "1px solid var(--border-default)", color: "var(--text-hi)" }}
           >
             Remix
           </Link>
           <Link
             href={`/s/${sim.shareId}`}
-            className="rounded-full px-3 py-1 text-xs font-semibold"
+            className="pill rounded-full px-3 py-1 text-xs font-semibold"
             style={{ background: "var(--primary)", color: "#02120f" }}
           >
             Open

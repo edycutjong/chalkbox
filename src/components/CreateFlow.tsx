@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { ArrowRight, Check, Circle, CircleCheck, LoaderCircle, RotateCcw } from "lucide-react";
 import { ScopeBadge } from "@/components/Badges";
@@ -246,6 +246,10 @@ export function CreateFlow() {
   }, []);
 
   const shareUrl = result?.shareId ? `/s/${result.shareId}` : "";
+  // Real deploy origin for the share link (falls back to the canonical domain
+  // during the first client render; share UI only appears after interaction).
+  const [origin, setOrigin] = useState("https://chalkbox.edycu.dev");
+  useEffect(() => setOrigin(window.location.origin), []);
 
   return (
     <div className="flex w-full flex-col gap-8">
@@ -264,12 +268,7 @@ export function CreateFlow() {
             onChange={(e) => setPrompt(e.target.value)}
             rows={3}
             placeholder="Show why dividing by a fraction makes the answer bigger, not smaller."
-            className="w-full resize-none rounded-2xl p-4 text-base outline-none"
-            style={{
-              background: "var(--bg-overlay)",
-              color: "var(--text-hi)",
-              border: "1px solid var(--border-default)",
-            }}
+            className="field w-full resize-none rounded-2xl p-4 text-base outline-none"
           />
           <div className="flex flex-wrap gap-2">
             {EXAMPLE_CHIPS.map((c) => (
@@ -277,12 +276,7 @@ export function CreateFlow() {
                 key={c}
                 type="button"
                 onClick={() => setPrompt(c)}
-                className="rounded-full px-3 py-1.5 text-xs transition-colors"
-                style={{
-                  background: "var(--bg-overlay)",
-                  color: "var(--text-mid)",
-                  border: "1px solid var(--border-subtle)",
-                }}
+                className="chip rounded-full px-3 py-1.5 text-xs"
               >
                 {c}
               </button>
@@ -307,7 +301,7 @@ export function CreateFlow() {
               type="button"
               onClick={run}
               disabled={!prompt.trim()}
-              className="inline-flex items-center gap-2 rounded-full px-6 py-3 text-sm font-bold transition-opacity disabled:opacity-40"
+              className="cta-accent inline-flex items-center gap-2 rounded-full px-6 py-3 text-sm font-bold disabled:opacity-40"
               style={{ background: "var(--accent)", color: "#1a1300" }}
             >
               Create manipulative
@@ -320,7 +314,7 @@ export function CreateFlow() {
       {steps.length > 0 && phase !== "rejected" && phase !== "unsupported" && (
         <ol className="glass flex flex-col gap-1 rounded-3xl p-6" data-testid="build-timeline">
           {steps.map((s) => (
-            <li key={s.id} className="flex items-start gap-3 py-2">
+            <li key={s.id} className="animate-up flex items-start gap-3 py-2">
               <StepIcon state={s.state} />
               <div className="flex flex-1 flex-col">
                 <span
@@ -379,7 +373,7 @@ export function CreateFlow() {
           <div className="flex flex-wrap gap-2">
             <Link
               href="/s/frac-div-demo"
-              className="inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-semibold"
+              className="pill inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-semibold"
               style={{ background: "var(--primary)", color: "#02120f" }}
             >
               Open the flagship (fraction division)
@@ -391,7 +385,7 @@ export function CreateFlow() {
                 reset();
                 setPrompt(EXAMPLE_CHIPS[0]);
               }}
-              className="rounded-full px-4 py-2 text-sm font-semibold"
+              className="pill rounded-full px-4 py-2 text-sm font-semibold"
               style={{ border: "1px solid var(--border-default)", color: "var(--text-hi)" }}
             >
               Try the built example
@@ -399,8 +393,7 @@ export function CreateFlow() {
             <button
               type="button"
               onClick={reset}
-              className="rounded-full px-4 py-2 text-sm"
-              style={{ color: "var(--text-mid)" }}
+              className="link-quiet rounded-full px-4 py-2 text-sm"
             >
               Rephrase
             </button>
@@ -433,17 +426,18 @@ export function CreateFlow() {
                 Student share link
               </span>
               <span className="font-mono text-sm" style={{ color: "var(--primary)" }}>
-                chalkbox.edycu.dev{shareUrl}
+                {origin.replace(/^https?:\/\//, "")}
+                {shareUrl}
               </span>
             </div>
             <div className="flex gap-2">
               <button
                 type="button"
                 onClick={() => {
-                  navigator.clipboard?.writeText(`https://chalkbox.edycu.dev${shareUrl}`);
+                  navigator.clipboard?.writeText(`${origin}${shareUrl}`);
                   setCopied(true);
                 }}
-                className="inline-flex items-center justify-center gap-1.5 rounded-full px-4 py-2 text-sm font-semibold"
+                className="pill inline-flex items-center justify-center gap-1.5 rounded-full px-4 py-2 text-sm font-semibold"
                 style={{ background: "var(--primary)", color: "#02120f" }}
               >
                 {copied ? (
@@ -457,7 +451,7 @@ export function CreateFlow() {
               </button>
               <Link
                 href={shareUrl}
-                className="rounded-full px-4 py-2 text-sm font-semibold"
+                className="pill rounded-full px-4 py-2 text-sm font-semibold"
                 style={{ border: "1px solid var(--border-default)", color: "var(--text-hi)" }}
               >
                 Open student view
@@ -465,8 +459,7 @@ export function CreateFlow() {
               <button
                 type="button"
                 onClick={reset}
-                className="rounded-full px-4 py-2 text-sm"
-                style={{ color: "var(--text-mid)" }}
+                className="link-quiet rounded-full px-4 py-2 text-sm"
               >
                 Make another
               </button>

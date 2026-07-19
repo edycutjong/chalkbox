@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { notFound } from "next/navigation";
 import { SimFrame } from "@/components/SimFrame";
 import { BrandMark } from "@/components/BrandMark";
@@ -76,11 +77,10 @@ export default async function StudentPage({ params }: { params: Promise<{ shareI
             : sim.interaction}
         </section>
 
-        <footer
-          className="flex items-center justify-center gap-1.5 text-[11px]"
-          style={{ color: "var(--text-low)" }}
-        >
-          made with <BrandMark size={12} /> Chalkbox
+        <footer className="flex items-center justify-center text-[11px]">
+          <Link href="/" className="link-quiet inline-flex items-center gap-1.5">
+            made with <BrandMark size={12} /> Chalkbox
+          </Link>
         </footer>
       </div>
     </main>

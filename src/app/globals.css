@@ -362,6 +362,100 @@ button:hover .icon-nudge {
     transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
+/* ── Micro-interactions: every actionable element gives hover/press feedback ── */
+.btn:active {
+  transform: translateY(1px) scale(0.99);
+}
+
+/* Small suggestion chips + filter tabs */
+.chip {
+  background: var(--bg-overlay);
+  color: var(--text-mid);
+  border: 1px solid var(--border-subtle);
+  cursor: pointer;
+  transition:
+    color var(--transition-fast),
+    border-color var(--transition-fast),
+    background var(--transition-fast),
+    transform var(--transition-fast);
+}
+.chip:hover {
+  color: var(--text-hi);
+  border-color: color-mix(in srgb, var(--primary) 45%, transparent);
+  background: var(--color-hover);
+  transform: translateY(-1px);
+}
+.chip:active {
+  transform: translateY(0) scale(0.97);
+}
+.tab[aria-selected="true"] {
+  background: var(--color-hover);
+  color: var(--primary);
+  border-color: color-mix(in srgb, var(--primary) 45%, transparent);
+}
+
+/* Small rounded action pills (Copy link, Open, Remix, …) — color-agnostic */
+.pill {
+  cursor: pointer;
+  transition:
+    transform var(--transition-fast),
+    filter var(--transition-fast),
+    box-shadow var(--transition-fast);
+}
+.pill:hover {
+  filter: brightness(1.12);
+  transform: translateY(-1px);
+}
+.pill:active {
+  transform: translateY(0) scale(0.97);
+  filter: brightness(0.98);
+}
+
+/* The amber "Create manipulative" CTA — glow on hover, press on click */
+.cta-accent {
+  transition:
+    transform var(--transition-fast),
+    box-shadow var(--transition-fast),
+    filter var(--transition-fast),
+    opacity var(--transition-fast);
+}
+.cta-accent:hover:not(:disabled) {
+  filter: brightness(1.06);
+  transform: translateY(-1px);
+  box-shadow: 0 8px 28px color-mix(in srgb, var(--accent) 35%, transparent);
+}
+.cta-accent:active:not(:disabled) {
+  transform: translateY(0) scale(0.98);
+  box-shadow: 0 3px 12px color-mix(in srgb, var(--accent) 25%, transparent);
+}
+
+/* Text inputs — focus ring that matches the brand, not just the UA outline */
+.field {
+  background: var(--bg-overlay);
+  color: var(--text-hi);
+  border: 1px solid var(--border-default);
+  transition:
+    border-color var(--transition-fast),
+    box-shadow var(--transition-fast);
+}
+.field:focus {
+  border-color: color-mix(in srgb, var(--primary) 70%, transparent);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--primary) 18%, transparent);
+}
+
+/* Quiet text links (footer) — brighten on hover */
+.link-quiet {
+  color: var(--text-mid);
+  transition: color var(--transition-fast);
+}
+.link-quiet:hover {
+  color: var(--text-hi);
+}
+
+input[type="range"] {
+  cursor: pointer;
+}
+
 /* Respect reduced motion */
 @media (prefers-reduced-motion: reduce) {
   *,

@@ -117,7 +117,7 @@ Live generation activates only with `OPENAI_API_KEY` present **and** `CHALKBOX_D
 git clone https://github.com/edycutjong/chalkbox.git
 cd chalkbox
 npm install
-cp .env.example .env.local   # add your OpenAI + Supabase keys
+cp .env.example .env.local  # add your OpenAI + Supabase keys
 npm run dev
 ```
 
