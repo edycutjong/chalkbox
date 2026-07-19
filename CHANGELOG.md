@@ -1,3 +1,10 @@
+## [1.2.5](https://github.com/edycutjong/chalkbox/compare/v1.2.4...v1.2.5) (2026-07-19)
+
+
+### Bug Fixes
+
+* **design:** background flooded with opaque brand color — replace color-mix glow/mesh tokens with literal rgba ([0c6e7af](https://github.com/edycutjong/chalkbox/commit/0c6e7afc1774d902477ac1a10f156a131434aa6c))
+
 ## [1.2.4](https://github.com/edycutjong/chalkbox/compare/v1.2.3...v1.2.4) (2026-07-19)
 
 
