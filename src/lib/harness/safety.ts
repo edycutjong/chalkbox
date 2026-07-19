@@ -42,6 +42,16 @@ const PHYSICS_HINTS = [
   "pendulum",
   "speed",
   "kinetic",
+  "ball",
+  "throw",
+  "launch",
+  "trajectory",
+  "degree",
+  "°",
+  "momentum",
+  "friction",
+  "bounce",
+  "motion",
 ];
 const UNSAFE_HINTS = ["weapon", "kill", "drug", "porn", "suicide", "hate"];
 
@@ -89,7 +99,7 @@ export function gatePrompt(prompt: string): SafetyVerdict {
   if (!isMath && !isPhysics) {
     return {
       decision: "reject",
-      reasons: ["Chalkbox builds math & physics manipulatives only — try a math or physics idea."],
+      reasons: ["Chalkbox builds math & physics manipulatives only."],
       gradeBand: null,
       subject: null,
       standard: null,
