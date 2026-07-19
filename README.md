@@ -1,14 +1,14 @@
 <div align="center">
+  <img src="docs/icon-animated.svg" width="144" alt="Chalkbox">
+
   <h1>Chalkbox 🖍️</h1>
   <p><em>Type the misconception; get a self-tested interactive manipulative in two minutes.</em></p>
-  <a href="https://chalkbox-theta.vercel.app">
-    <img src="docs/assets/hero-animated.svg" alt="Chalkbox — a teacher's sentence becomes a self-tested interactive manipulative: prompt → Codex writes code → test fails → Codex fixes it → Verified ✓ → Published" width="100%">
-  </a>
-  <sub><em>Animation not moving? Some viewers (VS Code / offline) show a still frame — <a href="docs/assets/readme-hero.png">static hero here</a>.</em></sub>
+
+  <img src="docs/hero-animated.svg" alt="Chalkbox — a teacher's sentence becomes a self-tested interactive manipulative: prompt → Codex writes code → test fails → Codex fixes it → Verified ✓ → Published" width="100%">
 
   <br/><br/>
 
-  [![Live Demo](https://img.shields.io/badge/🚀_Live-chalkbox--theta.vercel.app-14b8a6?style=for-the-badge)](https://chalkbox-theta.vercel.app)
+  [![Live Demo](https://img.shields.io/badge/🚀_Live-chalkbox.edycu.dev-14b8a6?style=for-the-badge)](https://chalkbox.edycu.dev)
   [![Pitch Video](https://img.shields.io/badge/🎬_Demo-Video-ef4444?style=for-the-badge)](#-demo-video)
   [![Built for OpenAI Build Week](https://img.shields.io/badge/OpenAI-Build_Week_2026-8b5cf6?style=for-the-badge)](https://openai.devpost.com)
 
@@ -31,6 +31,8 @@
 ## 📸 See it in Action
 
 <div align="center">
+  <a href="https://chalkbox.edycu.dev">
+  </a>
   <img src="docs/assets/devpost-gallery.png" alt="The sim tests itself before a student ever sees it" width="100%">
 </div>
 
@@ -102,7 +104,7 @@ Live generation activates only with `OPENAI_API_KEY` present **and** `CHALKBOX_D
 
 ## 🚀 Getting Started
 
-> **For Judges:** the seeded gallery at [chalkbox-theta.vercel.app](https://chalkbox-theta.vercel.app) is browsable with zero setup — no login.
+> **For Judges:** the seeded gallery at [chalkbox.edycu.dev](https://chalkbox.edycu.dev) is browsable with zero setup — no login.
 >
 > **Current status — runnable skeleton in demo mode.** The Create flow replays the flagship fraction-division build end-to-end (prompt → self-test → published share link) with no API keys. The harness it exercises is **real and unit-tested**: the static validator (import allowlist / no-network) and the interactive-invariant runner both work and pass. The live Codex-driven generation engine (arbitrary prompt → new verified sim) is the next milestone and drops in behind the `// STUB:` seams in `src/lib/harness/orchestrator.ts`.
 
@@ -140,7 +142,7 @@ npm run e2e:ui                 # Playwright interactive mode
 npm run lighthouse             # Lighthouse CI audit
 
 # ── Security ────────────────────────────────
-make security-scan             # npm audit + license compliance
+make security-scan  # npm audit + license compliance
 ```
 
 The unit suite covers the harness that *is* the product — the invariant runner, the static validator (import allowlist / no-network), and the retry orchestrator.
@@ -164,21 +166,21 @@ E2E specs run entirely in **demo mode** with zero environment variables: a smoke
 
 ```
 chalkbox/
-├── docs/                 # PRD, architecture, complexity blueprint + README assets
-│   └── assets/           # Hero, OG image, gallery/thumbnail renders
-├── e2e/                  # Playwright specs (demo-mode, create-flow, responsive)
-├── public/               # icon.svg + og-image.png (wired into layout metadata)
+├── docs/                   # PRD, architecture, complexity blueprint + README assets
+│   └── assets/             # Hero, OG image, gallery/thumbnail renders
+├── e2e/                    # Playwright specs (demo-mode, create-flow, responsive)
+├── public/                 # icon.svg + og-image.png (wired into layout metadata)
 ├── src/
-│   ├── app/              # Next.js App Router pages (/, /gallery, /create, /s/[shareId])
-│   ├── components/       # CreateFlow, GalleryGrid, SimFrame, Header, Brand, Badges
+│   ├── app/                # Next.js App Router pages (/, /gallery, /create, /s/[shareId])
+│   ├── components/         # CreateFlow, GalleryGrid, SimFrame, Header, Brand, Badges
 │   └── lib/
-│       ├── harness/      # The moat: validator, invariant-runner, orchestrator, safety
-│       ├── manipulatives/# Flagship interactive (fraction-division)
-│       └── seed/         # Curriculum-tagged gallery seed data
-├── .github/              # CI/CD pipeline, CodeQL, Dependabot, community health files
-├── lighthouserc.json     # Performance/accessibility/SEO thresholds
-├── playwright.config.ts  # E2E config
-└── README.md             # You are here
+│       ├── harness/        # The moat: validator, invariant-runner, orchestrator, safety
+│       ├── manipulatives/  # Flagship interactive (fraction-division)
+│       └── seed/           # Curriculum-tagged gallery seed data
+├── .github/                # CI/CD pipeline, CodeQL, Dependabot, community health files
+├── lighthouserc.json       # Performance/accessibility/SEO thresholds
+├── playwright.config.ts    # E2E config
+└── README.md               # You are here
 ```
 
 ---
