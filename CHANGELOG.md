@@ -1,3 +1,11 @@
+## [1.2.4](https://github.com/edycutjong/chalkbox/compare/v1.2.3...v1.2.4) (2026-07-19)
+
+
+### Bug Fixes
+
+* **gate:** stop rejecting the app's own 45° example chip ([9194a53](https://github.com/edycutjong/chalkbox/commit/9194a536117ffbe4680f069e1d3f026a7c1243f1))
+* **landing:** gate demo-mode banner and footer badge on DEMO_MODE ([59eb669](https://github.com/edycutjong/chalkbox/commit/59eb669cc9bcfe68d7a0e120168685c85e8d330a))
+
 ## [1.2.3](https://github.com/edycutjong/chalkbox/compare/v1.2.2...v1.2.3) (2026-07-19)
 
 
