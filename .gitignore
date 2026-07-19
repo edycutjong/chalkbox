@@ -19,8 +19,7 @@ next-env.d.ts
 /dist
 
 # Asset export pipeline (Playwright install artifacts)
-docs/assets/node_modules/
-docs/assets/package-lock.json
+docs/assets
 
 # Playwright
 /test-results/

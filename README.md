@@ -129,17 +129,17 @@ The generation loop is the moat — so the harness that guards it is production-
 
 ```bash
 # ── Code Quality ────────────────────────────
-npm run lint          # ESLint (next lint)
-npm run typecheck     # TypeScript strict (tsc --noEmit)
-npm run test          # Unit tests (Vitest)
-npm run test:coverage # Coverage report (v8)
-npm run format:check  # Prettier
-npm run ci            # Full quality gate (format + lint + typecheck + coverage + build)
+npm run lint           # ESLint (next lint)
+npm run typecheck      # TypeScript strict (tsc --noEmit)
+npm run test           # Unit tests (Vitest)
+npm run test:coverage  # Coverage report (v8)
+npm run format:check   # Prettier
+npm run ci             # Full quality gate (format + lint + typecheck + coverage + build)
 
 # ── Advanced Testing ────────────────────────
-npm run build && npm run e2e   # Playwright E2E (demo mode, no keys)
-npm run e2e:ui                 # Playwright interactive mode
-npm run lighthouse             # Lighthouse CI audit
+npm run build && npm run e2e  # Playwright E2E (demo mode, no keys)
+npm run e2e:ui                # Playwright interactive mode
+npm run lighthouse            # Lighthouse CI audit
 
 # ── Security ────────────────────────────────
 make security-scan  # npm audit + license compliance
