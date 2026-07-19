@@ -344,7 +344,7 @@ button:hover .icon-nudge {
   border-radius: 9999px;
   filter: blur(60px);
   pointer-events: none;
-  opacity: 0.5;
+  opacity: 0.3;
 }
 
 /* Scroll reveal — content is visible by default (no-JS safe). RevealOnScroll

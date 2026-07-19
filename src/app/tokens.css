@@ -14,8 +14,10 @@
   /* === Brand Colors === */
   --primary: #14b8a6; /* Chalkbox teal */
   --accent: #f59e0b; /* chalk-amber */
-  --primary-glow: color-mix(in srgb, var(--primary) 35%, transparent);
-  --accent-glow: color-mix(in srgb, var(--accent) 35%, transparent);
+  /* Literal rgba, NOT color-mix: the compiler's no-color-mix fallback strips
+     the alpha, turning every glow into opaque brand color. */
+  --primary-glow: rgba(20, 184, 166, 0.35);
+  --accent-glow: rgba(245, 158, 11, 0.35);
 
   /* === Surfaces === */
   --bg-base: #020617;
@@ -48,19 +50,16 @@
 
   /* === Gradients === */
   --gradient-hero: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+  /* Deliberately faint — deep-navy base with subtle brand glows at the
+     corners. Literal rgba (teal #14b8a6 / amber #f59e0b), NOT color-mix:
+     the CSS compiler's no-color-mix fallback strips the alpha and floods
+     the page with opaque brand color. Keep alphas low — at viewport scale
+     these ellipses overlap and stack. */
   --gradient-mesh:
-    radial-gradient(ellipse 60% 50% at 18% 20%, var(--primary-glow) 0%, transparent 60%),
-    radial-gradient(ellipse 50% 45% at 85% 15%, var(--accent-glow) 0%, transparent 55%),
-    radial-gradient(
-      ellipse 70% 60% at 70% 90%,
-      color-mix(in srgb, var(--primary) 18%, transparent) 0%,
-      transparent 65%
-    ),
-    radial-gradient(
-      ellipse 90% 80% at 50% 50%,
-      color-mix(in srgb, var(--accent) 8%, transparent) 0%,
-      transparent 75%
-    );
+    radial-gradient(ellipse 60% 50% at 18% 20%, rgba(20, 184, 166, 0.12) 0%, transparent 60%),
+    radial-gradient(ellipse 50% 45% at 85% 15%, rgba(245, 158, 11, 0.1) 0%, transparent 55%),
+    radial-gradient(ellipse 70% 60% at 70% 90%, rgba(20, 184, 166, 0.07) 0%, transparent 65%),
+    radial-gradient(ellipse 90% 80% at 50% 50%, rgba(245, 158, 11, 0.03) 0%, transparent 75%);
   --gradient-text: linear-gradient(to right, #ffffff, #94a3b8);
 
   /* === Typography === */

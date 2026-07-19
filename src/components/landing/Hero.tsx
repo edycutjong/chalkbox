@@ -37,7 +37,7 @@ export function Hero() {
           height: "220px",
           background: "var(--accent)",
           animationDelay: "-3s",
-          opacity: 0.4,
+          opacity: 0.22,
         }}
       />
       <div className="relative mx-auto flex max-w-3xl flex-col items-center gap-6 text-center">
