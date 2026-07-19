@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Chalkbox — YouTube Thumbnail 1280×720</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=JetBrains+Mono:wght@400;600&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="./_asset-utilities.css">
+<style>
+  body {
+    width: 1280px;
+    height: 720px;
+    position: relative;
+  }
+
+  .canvas {
+    position: relative;
+    width: 1280px;
+    height: 720px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* single dramatic radial glow behind the focal number */
+  .focal-glow {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 900px;
+    height: 700px;
+    transform: translate(-50%, -52%);
+    background:
+      radial-gradient(ellipse 50% 45% at 50% 50%, var(--primary-glow) 0%, transparent 65%),
+      radial-gradient(ellipse 65% 55% at 50% 55%, var(--accent-glow) 0%, transparent 70%);
+    filter: blur(2px);
+    z-index: -1;
+  }
+
+  .kicker {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-family: var(--font-mono);
+    font-size: 24px;
+    font-weight: 600;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--accent);
+    padding: 10px 26px;
+    border-radius: var(--radius-full);
+    background: color-mix(in srgb, var(--accent) 10%, transparent);
+    border: 1px solid color-mix(in srgb, var(--accent) 40%, transparent);
+    margin-bottom: 18px;
+  }
+
+  .giant {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 280px;
+    line-height: 0.95;
+    letter-spacing: -0.03em;
+    /* dark scrim under the glow so the headline stays crisp */
+    text-shadow: 0 6px 60px rgba(2, 6, 23, 0.85);
+  }
+
+  .hook {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 56px;
+    letter-spacing: 0.01em;
+    color: var(--text-hi);
+    margin-top: 6px;
+    text-shadow: 0 2px 30px rgba(2, 6, 23, 0.9);
+  }
+
+  .hook em {
+    font-style: normal;
+    color: var(--primary);
+  }
+
+  /* corner logo lockup (≤180px) */
+  .corner-logo {
+    position: absolute;
+    bottom: 36px;
+    left: 44px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .corner-logo img {
+    width: 56px;
+    height: 56px;
+    filter: drop-shadow(0 4px 14px var(--primary-glow));
+  }
+
+  .corner-logo span {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 30px;
+    color: var(--text-hi);
+  }
+
+  .corner-url {
+    position: absolute;
+    bottom: 50px;
+    right: 48px;
+    font-family: var(--font-mono);
+    font-size: 20px;
+    color: var(--text-mid);
+  }
+</style>
+</head>
+<body>
+  <div class="canvas">
+    <div class="background"></div>
+    <div class="grid-overlay"></div>
+    <div class="focal-glow"></div>
+
+    <div class="kicker"><span class="status-dot-pulse"></span>Self-tested</div>
+    <div class="giant text-gradient">2 MIN</div>
+    <div class="hook">misconception → <em>live sim</em></div>
+
+    <div class="corner-logo">
+      <img src="./icon.svg" alt="Chalkbox icon">
+      <span>Chalkbox</span>
+    </div>
+    <div class="corner-url">chalkbox.edycu.dev</div>
+
+    <div class="noise-overlay"></div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Chalkbox — OG Image 1200×630</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=JetBrains+Mono:wght@400;600&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="./_asset-utilities.css">
+<style>
+  body {
+    width: 1200px;
+    height: 630px;
+    position: relative;
+  }
+
+  .canvas {
+    position: relative;
+    width: 1200px;
+    height: 630px;
+    display: flex;
+    align-items: center;
+    padding: 0 64px;
+    gap: 40px;
+  }
+
+  /* ---- Left 55%: content stack ---- */
+  .content {
+    width: 55%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .live-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--font-mono);
+    font-size: 13px;
+    letter-spacing: 0.08em;
+    color: var(--text-mid);
+    padding: 6px 14px;
+    border-radius: var(--radius-full);
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid var(--border-subtle);
+    margin-bottom: 28px;
+  }
+
+  .hero-metric {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 96px;
+    line-height: 1.0;
+    letter-spacing: -0.02em;
+    margin-bottom: 6px;
+    /* subtle dark scrim behind headline over glow area */
+    text-shadow: 0 2px 24px rgba(2, 6, 23, 0.8);
+  }
+
+  .hero-metric .unit {
+    font-size: 44px;
+    color: var(--text-mid);
+    letter-spacing: 0;
+    -webkit-text-fill-color: var(--text-mid);
+  }
+
+  .metric-sub {
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: 32px;
+    color: var(--text-hi);
+    margin-bottom: 26px;
+  }
+
+  .app-name {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 14px;
+  }
+
+  .app-name img {
+    width: 44px;
+    height: 44px;
+    filter: drop-shadow(0 4px 12px var(--primary-glow));
+  }
+
+  .app-name span {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 40px;
+    letter-spacing: 0.01em;
+    color: var(--text-hi);
+  }
+
+  .one-liner {
+    font-family: var(--font-ui);
+    font-weight: 400;
+    font-size: 21px;
+    line-height: 1.45;
+    color: var(--text-mid);
+    max-width: 540px;
+    margin-bottom: 30px;
+  }
+
+  .pills {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+
+  /* ---- Right 45%: 3D glass pipeline card ---- */
+  .stage {
+    width: 45%;
+    display: flex;
+    justify-content: center;
+    perspective: 1200px;
+  }
+
+  .pipeline-card {
+    width: 420px;
+    transform: perspective(1200px) rotateY(-12deg) rotateX(4deg);
+    padding: 26px 28px;
+    box-shadow: var(--shadow-lg), 0 0 60px var(--primary-glow);
+  }
+
+  .card-title {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--text-low);
+    margin-bottom: 18px;
+  }
+
+  .step {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 11px 14px;
+    border-radius: var(--radius-12);
+    border: 1px solid var(--border-subtle);
+    background: rgba(255, 255, 255, 0.025);
+    margin-bottom: 10px;
+  }
+
+  .step-icon {
+    width: 26px;
+    height: 26px;
+    border-radius: var(--radius-8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-mono);
+    font-size: 13px;
+    font-weight: 600;
+    flex-shrink: 0;
+  }
+
+  .step-prompt .step-icon { background: var(--color-hover); color: var(--primary); border: 1px solid color-mix(in srgb, var(--primary) 40%, transparent); }
+  .step-test .step-icon   { background: var(--color-success-glow); color: var(--color-success); border: 1px solid color-mix(in srgb, var(--color-success) 40%, transparent); }
+  .step-ship .step-icon   { background: var(--accent-glow); color: var(--accent); border: 1px solid color-mix(in srgb, var(--accent) 45%, transparent); }
+
+  .step-label {
+    font-family: var(--font-mono);
+    font-size: 14px;
+    color: var(--text-hi);
+  }
+
+  .step-note {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--text-low);
+    margin-left: auto;
+  }
+
+  .step-connector {
+    width: 1px;
+    height: 12px;
+    margin: -6px 0 4px 26px;
+    background: linear-gradient(to bottom, var(--primary-glow), transparent);
+  }
+
+  .card-footer {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 16px;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--text-mid);
+  }
+
+  .card-footer .ok { color: var(--color-success); }
+
+  /* floating mono decorations */
+  .float-code {
+    position: absolute;
+    font-family: var(--font-mono);
+    font-size: 13px;
+    color: var(--text-low);
+    opacity: 0.55;
+  }
+  .float-1 { top: 46px; right: 74px; }
+  .float-2 { bottom: 40px; right: 240px; }
+</style>
+</head>
+<body>
+  <div class="canvas">
+    <div class="background"></div>
+    <div class="grid-overlay"></div>
+
+    <div class="content">
+      <div class="live-badge">
+        <span class="status-dot-pulse"></span>
+        LIVE · chalkbox.edycu.dev
+      </div>
+
+      <div class="hero-metric text-gradient">&lt; 2<span class="unit">&nbsp;min</span></div>
+      <div class="metric-sub">to a self-tested sim</div>
+
+      <div class="app-name">
+        <img src="./icon.svg" alt="Chalkbox icon">
+        <span>Chalkbox</span>
+      </div>
+
+      <p class="one-liner">Type the misconception; get a self-tested interactive manipulative in two minutes.</p>
+
+      <div class="pills">
+        <span class="tech-pill">Codex SDK</span>
+        <span class="tech-pill">GPT-5.6</span>
+        <span class="tech-pill">Next.js</span>
+        <span class="tech-pill">Supabase</span>
+        <span class="tech-pill">Vercel</span>
+      </div>
+    </div>
+
+    <div class="stage">
+      <div class="pipeline-card glass-panel">
+        <div class="card-title">codex · generation loop</div>
+
+        <div class="step step-prompt">
+          <span class="step-icon">?</span>
+          <span class="step-label">teacher prompt</span>
+          <span class="step-note">misconception</span>
+        </div>
+        <div class="step-connector"></div>
+
+        <div class="step step-prompt">
+          <span class="step-icon">&lt;/&gt;</span>
+          <span class="step-label">codex generate</span>
+          <span class="step-note">sim + smoke test</span>
+        </div>
+        <div class="step-connector"></div>
+
+        <div class="step step-test">
+          <span class="step-icon">✓</span>
+          <span class="step-label">headless self-test</span>
+          <span class="step-note">retry on fail</span>
+        </div>
+        <div class="step-connector"></div>
+
+        <div class="step step-ship">
+          <span class="step-icon">↗</span>
+          <span class="step-label">publish → phone link</span>
+          <span class="step-note">sandboxed</span>
+        </div>
+
+        <div class="card-footer">
+          <span class="ok">✓ invariants hold</span>
+          <span>· published in 1m 42s</span>
+        </div>
+      </div>
+    </div>
+
+    <span class="float-code float-1">assert(slider.moves)</span>
+    <span class="float-code float-2">retry: 1 · pass</span>
+
+    <div class="noise-overlay"></div>
+  </div>
+</body>
+</html>

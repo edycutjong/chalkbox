@@ -1,0 +1,97 @@
+import Link from "next/link";
+import { CreateFlow } from "@/components/CreateFlow";
+import { DEMO_NOTICE } from "@/lib/demo";
+
+/** Verifiable product facts — NO invented user counts (zero real traction yet). */
+const STATS: { value: string; label: string }[] = [
+  { value: "~2 min", label: "sentence → live sim" },
+  { value: "0", label: "API keys to try it" },
+  { value: "4", label: "verification gates" },
+  { value: "6", label: "invariant types" },
+];
+
+export function Hero() {
+  return (
+    <section className="relative mx-auto w-full max-w-6xl px-5 pb-16 pt-10 sm:pt-16">
+      <div className="mx-auto flex max-w-3xl flex-col items-center gap-6 text-center">
+        <span
+          className="pill animate-up"
+          style={{ animationDelay: "0ms", color: "var(--primary)" }}
+        >
+          🖍️ OpenAI Build Week · Education
+        </span>
+
+        <h1 className="text-4xl font-bold leading-[1.05] sm:text-6xl">
+          <span className="animate-up inline-block" style={{ animationDelay: "60ms" }}>
+            A sentence becomes a{" "}
+          </span>
+          <span
+            className="text-brandient animate-up inline-block"
+            style={{ animationDelay: "180ms" }}
+          >
+            self-tested
+          </span>{" "}
+          <span className="animate-up inline-block" style={{ animationDelay: "300ms" }}>
+            manipulative.
+          </span>
+        </h1>
+
+        <p
+          className="animate-up max-w-xl text-base sm:text-lg"
+          style={{ animationDelay: "420ms", color: "var(--text-mid)" }}
+        >
+          A teacher types the misconception she fights every year. Codex writes an interactive,{" "}
+          <em>runs its own test</em>, retries until it passes, and publishes a phone-friendly
+          manipulative her students open on any device.
+        </p>
+
+        <div
+          className="animate-up flex flex-wrap items-center justify-center gap-3"
+          style={{ animationDelay: "540ms" }}
+        >
+          <Link href="/create" className="btn btn-primary">
+            Create one now <span aria-hidden>→</span>
+          </Link>
+          <Link href="/#how" className="btn btn-ghost">
+            See how the loop works
+          </Link>
+        </div>
+
+        {/* Social proof — real, checkable numbers, not testimonials. */}
+        <dl
+          className="animate-up mt-4 grid w-full max-w-lg grid-cols-4 gap-3"
+          style={{ animationDelay: "660ms" }}
+        >
+          {STATS.map((s) => (
+            <div key={s.label} className="flex flex-col items-center gap-1">
+              <dt className="font-display text-2xl font-bold" style={{ color: "var(--text-hi)" }}>
+                {s.value}
+              </dt>
+              <dd className="text-[0.62rem] leading-tight" style={{ color: "var(--text-low)" }}>
+                {s.label}
+              </dd>
+            </div>
+          ))}
+        </dl>
+      </div>
+
+      {/* Live interactive centerpiece — the product IS the hero media. */}
+      <div id="create" className="animate-fade mx-auto mt-14 w-full max-w-3xl scroll-mt-24">
+        <div className="mb-3 flex items-center justify-center gap-2">
+          <span
+            className="inline-block h-2 w-2 rounded-full blink"
+            style={{ background: "var(--color-success)" }}
+            aria-hidden
+          />
+          <span className="eyebrow" style={{ color: "var(--text-mid)" }}>
+            Live · watch it test itself
+          </span>
+        </div>
+        <CreateFlow />
+        <p className="mt-3 text-center text-xs" style={{ color: "var(--text-low)" }}>
+          {DEMO_NOTICE}
+        </p>
+      </div>
+    </section>
+  );
+}
