@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { BrandMark } from "@/components/BrandMark";
+import { DEMO_MODE } from "@/lib/demo";
 
 const GITHUB = "https://github.com/edycutjong/chalkbox";
 
@@ -75,7 +76,9 @@ export function Footer() {
         style={{ color: "var(--text-low)" }}
       >
         <span>© 2026 Chalkbox · MIT Licensed · Built for OpenAI Build Week</span>
-        <span className="font-mono">Demo mode · no keys required</span>
+        <span className="font-mono">
+          {DEMO_MODE ? "Demo mode · no keys required" : "Live · Codex + GPT-5.6"}
+        </span>
       </div>
     </footer>
   );

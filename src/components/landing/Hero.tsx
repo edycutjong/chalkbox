@@ -2,7 +2,7 @@ import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { CreateFlow } from "@/components/CreateFlow";
 import { BrandMark } from "@/components/BrandMark";
-import { DEMO_NOTICE } from "@/lib/demo";
+import { DEMO_MODE, DEMO_NOTICE } from "@/lib/demo";
 
 /** Verifiable product facts — NO invented user counts (zero real traction yet). */
 const STATS: { value: string; label: string }[] = [
@@ -115,9 +115,11 @@ export function Hero() {
           </span>
         </div>
         <CreateFlow />
-        <p className="mt-3 text-center text-xs" style={{ color: "var(--text-low)" }}>
-          {DEMO_NOTICE}
-        </p>
+        {DEMO_MODE && (
+          <p className="mt-3 text-center text-xs" style={{ color: "var(--text-low)" }}>
+            {DEMO_NOTICE}
+          </p>
+        )}
       </div>
     </section>
   );
