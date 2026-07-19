@@ -184,7 +184,7 @@
   }
 }
 
-⚠️ INCOMPLETE: --primary-glow, --accent-glow, --gradient-mesh remain
+TODO INCOMPLETE: --primary-glow, --accent-glow, --gradient-mesh remain
    tuned for dark backgrounds. They use color-mix() so they'll auto-adjust
    when you change --primary, but the glow alpha (35%) may need lowering
    to ~15% on light backgrounds. Override in the light-mode block when

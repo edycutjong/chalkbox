@@ -2,6 +2,7 @@
 
 import { useCallback, useRef, useState } from "react";
 import Link from "next/link";
+import { ArrowRight, Check, Circle, CircleCheck, LoaderCircle, RotateCcw } from "lucide-react";
 import { ScopeBadge } from "@/components/Badges";
 import { SimFrame } from "@/components/SimFrame";
 import { HERO_SIM, resolveInteractiveSim, type GallerySim } from "@/lib/seed/gallery";
@@ -187,19 +188,19 @@ export function CreateFlow() {
       pushStep({ id: `a${a.n}-g2`, label: "Running static safety checks (G2)…", state: "active" });
       await sleep(650);
       if (!a.validation.ok) {
-        settleLast("fail", `✗ ${formatViolations(a.validation)}`);
+        settleLast("fail", formatViolations(a.validation));
         continue; // Codex retries — the reason IS this real violation.
       }
       settleLast(
         "pass",
-        `✓ G2 clean — ${a.validation.meta.importCount} imports, ${a.validation.meta.nodeCount} nodes`,
+        `G2 clean — ${a.validation.meta.importCount} imports, ${a.validation.meta.nodeCount} nodes`,
       );
 
       // Headless render.
       if (!a.render.ok) {
         pushStep({ id: `a${a.n}-render`, label: "Headless render…", state: "active" });
         await sleep(400);
-        settleLast("fail", `✗ ${a.render.error ?? "render failed"}`);
+        settleLast("fail", a.render.error ?? "render failed");
         continue;
       }
 
@@ -211,16 +212,16 @@ export function CreateFlow() {
       });
       await sleep(750);
       if (!a.invariantRun.passed) {
-        settleLast("fail", `✗ ${formatInvariantFailures(a.invariantRun)}`);
+        settleLast("fail", formatInvariantFailures(a.invariantRun));
         continue;
       }
       const passCount = a.invariantRun.results.filter((r) => r.passed).length;
-      settleLast("pass", `✓ ${passCount}/${a.invariantRun.results.length} invariants hold`);
+      settleLast("pass", `${passCount}/${a.invariantRun.results.length} invariants hold`);
     }
 
     // G4 / publish — status comes from the real GenerationResult, not a literal.
     if (gen.status === "published") {
-      pushStep({ id: "g4", label: "Verified ✓ Published", state: "active", accent: true });
+      pushStep({ id: "g4", label: "Verified · Published", state: "active", accent: true });
       await sleep(450);
       settleLast(
         "pass",
@@ -306,10 +307,11 @@ export function CreateFlow() {
               type="button"
               onClick={run}
               disabled={!prompt.trim()}
-              className="rounded-full px-6 py-3 text-sm font-bold transition-opacity disabled:opacity-40"
+              className="inline-flex items-center gap-2 rounded-full px-6 py-3 text-sm font-bold transition-opacity disabled:opacity-40"
               style={{ background: "var(--accent)", color: "#1a1300" }}
             >
-              Create manipulative →
+              Create manipulative
+              <ArrowRight className="icon-nudge" size={16} aria-hidden />
             </button>
           </div>
         </div>
@@ -377,10 +379,11 @@ export function CreateFlow() {
           <div className="flex flex-wrap gap-2">
             <Link
               href="/s/frac-div-demo"
-              className="rounded-full px-4 py-2 text-sm font-semibold"
+              className="inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-semibold"
               style={{ background: "var(--primary)", color: "#02120f" }}
             >
-              Open the flagship (fraction division) →
+              Open the flagship (fraction division)
+              <ArrowRight className="icon-nudge" size={15} aria-hidden />
             </Link>
             <button
               type="button"
@@ -440,10 +443,17 @@ export function CreateFlow() {
                   navigator.clipboard?.writeText(`https://chalkbox.edycu.dev${shareUrl}`);
                   setCopied(true);
                 }}
-                className="rounded-full px-4 py-2 text-sm font-semibold"
+                className="inline-flex items-center justify-center gap-1.5 rounded-full px-4 py-2 text-sm font-semibold"
                 style={{ background: "var(--primary)", color: "#02120f" }}
               >
-                {copied ? "Copied ✓" : "Copy link"}
+                {copied ? (
+                  <>
+                    <Check size={15} strokeWidth={3} aria-hidden />
+                    Copied
+                  </>
+                ) : (
+                  "Copy link"
+                )}
               </button>
               <Link
                 href={shareUrl}
@@ -492,16 +502,25 @@ function GeneratedArtifact({ result }: { result: GenerationResult }) {
 }
 
 function StepIcon({ state }: { state: StepState }) {
-  const map: Record<StepState, { glyph: string; color: string }> = {
-    pending: { glyph: "○", color: "var(--text-low)" },
-    active: { glyph: "◐", color: "var(--primary)" },
-    pass: { glyph: "✓", color: "var(--color-success)" },
-    fail: { glyph: "↻", color: "var(--color-warning)" },
-  };
-  const { glyph, color } = map[state];
+  const color =
+    state === "pass"
+      ? "var(--color-success)"
+      : state === "fail"
+        ? "var(--color-warning)"
+        : state === "active"
+          ? "var(--primary)"
+          : "var(--text-low)";
   return (
-    <span className="mt-0.5 font-mono text-sm" style={{ color }} aria-hidden>
-      {glyph}
+    <span className="mt-0.5 flex-shrink-0" style={{ color }} aria-hidden>
+      {state === "pass" ? (
+        <CircleCheck size={16} strokeWidth={2.25} />
+      ) : state === "fail" ? (
+        <RotateCcw size={16} strokeWidth={2.25} />
+      ) : state === "active" ? (
+        <LoaderCircle className="spin" size={16} strokeWidth={2.25} />
+      ) : (
+        <Circle size={16} strokeWidth={2.25} />
+      )}
     </span>
   );
 }

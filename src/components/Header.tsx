@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { ArrowRight } from "lucide-react";
 import { Brand } from "@/components/Brand";
 
 export function Header() {
@@ -28,7 +29,8 @@ export function Header() {
           </Link>
         </nav>
         <Link href="/create" className="btn btn-primary whitespace-nowrap text-sm">
-          Create<span className="hidden sm:inline"> a manipulative</span> <span aria-hidden>→</span>
+          Create<span className="hidden sm:inline"> a manipulative</span>
+          <ArrowRight className="icon-nudge" size={16} aria-hidden />
         </Link>
       </div>
     </header>

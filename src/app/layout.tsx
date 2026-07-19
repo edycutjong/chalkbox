@@ -24,7 +24,7 @@ const mono = JetBrains_Mono({
   display: "swap",
 });
 
-const TITLE = "Chalkbox 🖍️ — a sentence becomes a self-tested manipulative";
+const TITLE = "Chalkbox — a sentence becomes a self-tested manipulative";
 const DESCRIPTION =
   "A teacher types a math or physics misconception; Codex builds, self-tests, and publishes a live interactive manipulative behind a phone-friendly share link. The moat is the self-test verification loop.";
 

@@ -1,4 +1,5 @@
 import type { Subject } from "@/lib/harness/types";
+import { BrandMark } from "@/components/BrandMark";
 
 export function ScopeBadge() {
   return (
@@ -10,7 +11,7 @@ export function ScopeBadge() {
         border: "1px solid var(--border-subtle)",
       }}
     >
-      <span aria-hidden>🖍️</span> Math &amp; physics manipulatives
+      <BrandMark size={14} /> Math &amp; physics manipulatives
     </span>
   );
 }

@@ -4,6 +4,8 @@
  * The trace mirrors StubOrchestrator's genuinely-computed 3-attempt run.
  */
 
+import { Check, X } from "lucide-react";
+
 interface TraceLine {
   gate: string;
   text: string;
@@ -95,7 +97,11 @@ export function Proof() {
                   }}
                   aria-hidden
                 >
-                  {l.status === "pass" ? "✓" : "✗"}
+                  {l.status === "pass" ? (
+                    <Check size={15} strokeWidth={3} />
+                  ) : (
+                    <X size={15} strokeWidth={3} />
+                  )}
                 </span>
                 <span style={{ color: "var(--text-low)" }} className="w-20 flex-shrink-0">
                   {l.gate}

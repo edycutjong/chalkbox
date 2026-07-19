@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { BrandMark } from "@/components/BrandMark";
 
 const GITHUB = "https://github.com/edycutjong/chalkbox";
 
@@ -39,9 +40,7 @@ export function Footer() {
       <div className="mx-auto grid w-full max-w-6xl gap-10 px-5 py-14 md:grid-cols-[1.4fr_1fr_1fr_1fr]">
         <div className="flex flex-col gap-3">
           <div className="flex items-center gap-2 font-semibold">
-            <span className="text-2xl leading-none" aria-hidden>
-              🖍️
-            </span>
+            <BrandMark size={28} />
             <span className="text-lg font-bold" style={{ color: "var(--text-hi)" }}>
               Chalkbox
             </span>

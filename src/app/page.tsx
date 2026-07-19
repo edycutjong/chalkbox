@@ -12,6 +12,7 @@
  */
 
 import { Header } from "@/components/Header";
+import { RevealOnScroll } from "@/components/RevealOnScroll";
 import { Hero } from "@/components/landing/Hero";
 import { HowItWorks } from "@/components/landing/HowItWorks";
 import { Benefits } from "@/components/landing/Benefits";
@@ -24,6 +25,7 @@ import { Footer } from "@/components/landing/Footer";
 export default function HomePage() {
   return (
     <main className="min-h-dvh">
+      <RevealOnScroll />
       <Header />
       <Hero />
       <div className="hairline mx-auto max-w-6xl" />

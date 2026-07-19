@@ -1,7 +1,7 @@
 import Link from "next/link";
+import { ArrowRight } from "lucide-react";
 import { GALLERY_SIMS } from "@/lib/seed/gallery";
-
-const SUBJECT_ICON: Record<string, string> = { math: "➗", physics: "🔬" };
+import { SubjectIcon } from "@/components/icons";
 
 export function GalleryPreview() {
   const sims = GALLERY_SIMS.slice(0, 6);
@@ -17,13 +17,14 @@ export function GalleryPreview() {
           </h2>
         </div>
         <Link href="/gallery" className="btn btn-ghost text-sm">
-          Browse all {GALLERY_SIMS.length} <span aria-hidden>→</span>
+          Browse all {GALLERY_SIMS.length}{" "}
+          <ArrowRight className="icon-nudge" size={16} aria-hidden />
         </Link>
       </div>
 
       <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
         {sims.map((s) => (
-          <article key={s.slug} className="card card-hover flex min-w-0 flex-col gap-4 p-6">
+          <article key={s.slug} className="card card-hover reveal flex min-w-0 flex-col gap-4 p-6">
             <div className="flex items-center justify-between">
               <span
                 className="pill font-mono"
@@ -31,8 +32,8 @@ export function GalleryPreview() {
               >
                 {s.standard.framework} {s.standard.code}
               </span>
-              <span className="text-lg" aria-hidden>
-                {SUBJECT_ICON[s.subject] ?? "✏️"}
+              <span className="feature-icon h-9 w-9" aria-hidden>
+                <SubjectIcon subject={s.subject} size={18} strokeWidth={1.75} />
               </span>
             </div>
             <h3 className="text-lg font-bold leading-snug">{s.title}</h3>

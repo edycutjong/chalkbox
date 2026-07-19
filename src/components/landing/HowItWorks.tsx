@@ -1,3 +1,5 @@
+import { ArrowRight, RotateCcw } from "lucide-react";
+
 /**
  * The verification loop — the moat, told as a doc-quality pipeline.
  * Gates mirror README "Why the loop matters" (G1–G4) exactly.
@@ -28,7 +30,7 @@ const GATES: Gate[] = [
     title: "Render + interactive invariants",
     detail:
       "It mounts headlessly, then the pedagogy is asserted as a test. Fail → retry with the trace.",
-    mono: "drag divisor smaller ⇒ quotient bigger ✓",
+    mono: "assert: smaller divisor, bigger quotient",
   },
   {
     id: "G4",
@@ -57,7 +59,7 @@ export function HowItWorks() {
 
       <ol className="grid gap-5 md:grid-cols-4">
         {GATES.map((g, i) => (
-          <li key={g.id} className="card card-hover relative flex flex-col gap-3 p-6">
+          <li key={g.id} className="card card-hover reveal relative flex flex-col gap-3 p-6">
             <div className="flex items-center justify-between">
               <span className="font-mono text-xs font-semibold" style={{ color: "var(--accent)" }}>
                 {g.id}
@@ -87,7 +89,7 @@ export function HowItWorks() {
                 className="absolute -right-4 top-1/2 z-10 hidden -translate-y-1/2 md:block"
                 style={{ color: "var(--primary)" }}
               >
-                →
+                <ArrowRight size={18} strokeWidth={2.5} />
               </span>
             )}
           </li>
@@ -98,8 +100,12 @@ export function HowItWorks() {
         className="mx-auto mt-8 flex max-w-xl items-center justify-center gap-2 text-center text-sm"
         style={{ color: "var(--text-low)" }}
       >
-        <span className="font-mono text-xs" style={{ color: "var(--accent)" }}>
-          ↺ retry-with-trace
+        <span
+          className="inline-flex items-center gap-1.5 font-mono text-xs"
+          style={{ color: "var(--accent)" }}
+        >
+          <RotateCcw size={13} strokeWidth={2.5} aria-hidden />
+          retry-with-trace
         </span>
         on any gate failure, within a bounded token budget — never an infinite loop.
       </p>

@@ -1,4 +1,6 @@
 import Link from "next/link";
+import { ArrowRight } from "lucide-react";
+import { BrandMark } from "@/components/BrandMark";
 
 export function FinalCTA() {
   return (
@@ -20,7 +22,7 @@ export function FinalCTA() {
         />
         <div className="relative flex flex-col items-center gap-6">
           <span className="pill" style={{ color: "var(--primary)" }}>
-            🖍️ No login · no keys · ~2 minutes
+            <BrandMark size={14} /> No login · no keys · ~2 minutes
           </span>
           <h2 className="max-w-2xl text-3xl font-bold leading-tight sm:text-5xl">
             Type the misconception. <br />
@@ -32,7 +34,7 @@ export function FinalCTA() {
           </p>
           <div className="flex flex-wrap items-center justify-center gap-3 pt-1">
             <Link href="/create" className="btn btn-primary text-base">
-              Create a manipulative <span aria-hidden>→</span>
+              Create a manipulative <ArrowRight className="icon-nudge" size={18} aria-hidden />
             </Link>
             <Link href="/gallery" className="btn btn-ghost text-base">
               Explore the gallery

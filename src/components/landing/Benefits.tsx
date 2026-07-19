@@ -1,5 +1,7 @@
+import { RefreshCw, ShieldCheck, Ruler, Smartphone, type LucideIcon } from "lucide-react";
+
 interface Benefit {
-  icon: string;
+  icon: LucideIcon;
   title: string;
   body: string;
   span: string; // grid emphasis for an asymmetric layout
@@ -7,25 +9,25 @@ interface Benefit {
 
 const BENEFITS: Benefit[] = [
   {
-    icon: "🔁",
+    icon: RefreshCw,
     title: "It tests itself before a child sees it",
     body: "Every generation renders headlessly and asserts its own interactive invariants. If the pedagogy is wrong, it retries with the error trace. Nothing untested ships.",
     span: "md:col-span-2",
   },
   {
-    icon: "🛡️",
+    icon: ShieldCheck,
     title: "AI-written code, safely sandboxed",
     body: "Sims run in a null-origin iframe with a strict CSP (connect-src 'none'), an import allowlist, and AST validation. No network, no surprises.",
     span: "md:col-span-1",
   },
   {
-    icon: "📐",
+    icon: Ruler,
     title: "Standards-aligned by construction",
     body: "Math and physics, tagged to real Common Core / NGSS codes — the gate rejects anything off-curriculum or off-grade.",
     span: "md:col-span-1",
   },
   {
-    icon: "📱",
+    icon: Smartphone,
     title: "A link, not an app store",
     body: "Students open a zero-chrome manipulative on any phone. No login, no install — just the thing their class is stuck on tonight.",
     span: "md:col-span-2",
@@ -45,24 +47,23 @@ export function Benefits() {
       </div>
 
       <div className="grid gap-5 md:grid-cols-3">
-        {BENEFITS.map((b) => (
-          <article key={b.title} className={`card card-hover flex flex-col gap-4 p-7 ${b.span}`}>
-            <span
-              className="flex h-11 w-11 items-center justify-center rounded-xl text-xl"
-              style={{
-                background: "var(--color-hover)",
-                border: "1px solid var(--border-subtle)",
-              }}
-              aria-hidden
+        {BENEFITS.map((b) => {
+          const Icon = b.icon;
+          return (
+            <article
+              key={b.title}
+              className={`card card-hover reveal flex flex-col gap-4 p-7 ${b.span}`}
             >
-              {b.icon}
-            </span>
-            <h3 className="text-xl font-bold leading-snug">{b.title}</h3>
-            <p className="text-sm leading-relaxed" style={{ color: "var(--text-mid)" }}>
-              {b.body}
-            </p>
-          </article>
-        ))}
+              <span className="feature-icon h-11 w-11" aria-hidden>
+                <Icon size={22} strokeWidth={1.75} />
+              </span>
+              <h3 className="text-xl font-bold leading-snug">{b.title}</h3>
+              <p className="text-sm leading-relaxed" style={{ color: "var(--text-mid)" }}>
+                {b.body}
+              </p>
+            </article>
+          );
+        })}
       </div>
     </section>
   );

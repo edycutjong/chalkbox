@@ -1,5 +1,7 @@
 import Link from "next/link";
+import { ArrowRight } from "lucide-react";
 import { CreateFlow } from "@/components/CreateFlow";
+import { BrandMark } from "@/components/BrandMark";
 import { DEMO_NOTICE } from "@/lib/demo";
 
 /** Verifiable product facts — NO invented user counts (zero real traction yet). */
@@ -12,13 +14,38 @@ const STATS: { value: string; label: string }[] = [
 
 export function Hero() {
   return (
-    <section className="relative mx-auto w-full max-w-6xl px-5 pb-16 pt-10 sm:pt-16">
-      <div className="mx-auto flex max-w-3xl flex-col items-center gap-6 text-center">
+    <section className="relative mx-auto w-full max-w-6xl overflow-hidden px-5 pb-16 pt-10 sm:pt-16">
+      {/* floating brand orbs — depth behind the hero */}
+      <div
+        aria-hidden
+        className="orb drift"
+        style={{
+          top: "-40px",
+          left: "8%",
+          width: "260px",
+          height: "260px",
+          background: "var(--primary)",
+        }}
+      />
+      <div
+        aria-hidden
+        className="orb drift"
+        style={{
+          top: "40px",
+          right: "6%",
+          width: "220px",
+          height: "220px",
+          background: "var(--accent)",
+          animationDelay: "-3s",
+          opacity: 0.4,
+        }}
+      />
+      <div className="relative mx-auto flex max-w-3xl flex-col items-center gap-6 text-center">
         <span
           className="pill animate-up"
           style={{ animationDelay: "0ms", color: "var(--primary)" }}
         >
-          🖍️ OpenAI Build Week · Education
+          <BrandMark size={14} /> OpenAI Build Week · Education
         </span>
 
         <h1 className="text-4xl font-bold leading-[1.05] sm:text-6xl">
@@ -50,7 +77,7 @@ export function Hero() {
           style={{ animationDelay: "540ms" }}
         >
           <Link href="/create" className="btn btn-primary">
-            Create one now <span aria-hidden>→</span>
+            Create one now <ArrowRight className="icon-nudge" size={17} aria-hidden />
           </Link>
           <Link href="/#how" className="btn btn-ghost">
             See how the loop works

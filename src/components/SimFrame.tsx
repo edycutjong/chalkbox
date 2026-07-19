@@ -1,4 +1,5 @@
 import FractionDivision from "@/lib/manipulatives/fraction-division";
+import { SubjectIcon } from "@/components/icons";
 import type { GallerySim } from "@/lib/seed/gallery";
 
 /**
@@ -30,8 +31,12 @@ function StaticPreview({ sim }: { sim: GallerySim }) {
         border: "1px dashed var(--border-default)",
       }}
     >
-      <span className="text-3xl" aria-hidden>
-        {sim.subject === "math" ? "📐" : "🧪"}
+      <span
+        className="feature-icon mx-auto h-14 w-14"
+        style={{ color: "var(--primary)" }}
+        aria-hidden
+      >
+        <SubjectIcon subject={sim.subject} size={26} strokeWidth={1.75} />
       </span>
       <p className="text-sm font-medium" style={{ color: "var(--text-hi)" }}>
         {sim.interaction}

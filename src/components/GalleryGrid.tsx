@@ -2,6 +2,7 @@
 
 import { useMemo, useState } from "react";
 import Link from "next/link";
+import { Star } from "lucide-react";
 import { StandardChip, SubjectTag } from "@/components/Badges";
 import { GALLERY_SIMS, type GallerySim } from "@/lib/seed/gallery";
 
@@ -52,7 +53,7 @@ export function GalleryGrid() {
 function SimCard({ sim }: { sim: GallerySim }) {
   return (
     <article
-      className="glass flex flex-col gap-3 rounded-2xl p-5"
+      className="glass card-hover reveal flex flex-col gap-3 rounded-2xl p-5"
       style={sim.hero ? { borderColor: "var(--accent)" } : undefined}
     >
       <div className="flex items-center justify-between gap-2">
@@ -62,8 +63,17 @@ function SimCard({ sim }: { sim: GallerySim }) {
         </span>
       </div>
 
-      <h3 className="text-lg font-bold" style={{ color: "var(--text-hi)" }}>
-        {sim.hero && <span aria-hidden>⭐ </span>}
+      <h3
+        className="flex items-center gap-1.5 text-lg font-bold"
+        style={{ color: "var(--text-hi)" }}
+      >
+        {sim.hero && (
+          <Star
+            size={16}
+            aria-hidden
+            style={{ color: "var(--accent)", fill: "var(--accent)", flexShrink: 0 }}
+          />
+        )}
         {sim.title}
       </h3>
 
