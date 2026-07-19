@@ -14,6 +14,34 @@
 
 ---
 
+## ⚙️ Build Status — this blueprint vs. what shipped
+
+> This document is the **design blueprint**. Chalkbox is a Build-Week project: the core
+> self-testing engine shipped and is tested; some hardening/packaging around it is designed
+> but not yet built. Honest mapping (verify against `src/lib/harness/`):
+
+| Blueprint element | Status | What actually shipped |
+|---|---|---|
+| 4-gate pipeline (G1 Luna → G2 static → G3 invariants → G4 Luna) | ✅ Shipped | all four gates run — `safety.ts`, `validator.ts`, `invariant-runner.ts` |
+| Interactive-invariant DSL (§3.3) | ✅ Shipped | all 6 kinds implemented (render, monotonic, bounds, response, conservation, determinism) in `invariant-runner.ts` |
+| Retry-with-trace + bounded budget (§3.4) | ✅ Shipped | `RealOrchestrator` + `budget-guard.ts` (attempts / tokens / wall-clock) |
+| Self-test coupling | ✅ Shipped (differs from §3.2) | Sol emits component **+ a coupled `SimProbe`**; server headless-renders and cross-checks every probe test-id against the markup before G3 (`generated-sim.ts`). This replaces the §3.2 "fill-two-regions harness." |
+| GPT-5.6 Sol / Luna | ✅ Shipped | via the OpenAI **Responses API** (`openai-responses.ts`) — the runtime engine is not a "Codex SDK"; Codex CLI built the harness (the submitted `/feedback` Session ID) |
+| G2 static validation (§2.5) | 🟡 Simpler | comment/string-aware **pattern scan**, not an SWC/Babel AST walk — behind the same `validate()` seam (AST is a drop-in) |
+| Per-request isolation (§2.1) | 🟡 Simpler | Node `vm` + `mkdtemp` workspace with forbidden globals — **not** tmpfs / `unshare -n` / disk-quota / ULID |
+| `@chalkbox/kit` primitives (§2.4) | 🟡 Partial | allowlisted and referenced by the flagship; **live-generated** sims currently import React only |
+| `scripts/bench.ts` (§5.1) | 🟡 Partial | exists (`npm run bench -- N`), 4-prompt set — **the success-rate / latency numbers shown in §5.1 are illustrative, not measured** |
+| Cross-origin sandbox host + exact CSP (§2.2 / 2.3 / 6.1) | 📋 Designed | generated sims ship under a strict no-network CSP; the separate `sandbox.chalkbox.edycu.dev` origin is not yet deployed |
+| `@chalkbox/harness` package + full `chalkbox` CLI (§4) | 📋 Designed | engine lives in `src/lib/harness/`; only `bench` is wired — not a published SDK/CLI |
+| `seed.ts` / `verify.ts` (§5.2 / 5.3) | 📋 Designed | not built; the gallery is seeded static data |
+| `/integrations/verify` page (§6.2) | 📋 Ships elsewhere | the live SSE trace ships at **`/api/generate`**, consumed by the Create UI — no separate verify page |
+
+> ✅ shipped · 🟡 shipped, simpler than the blueprint · 📋 designed, not yet built.
+> The irreducible depth (§7) — the self-testing generation loop and the sandbox safety model —
+> is real and running. Items marked 📋 are hardening/packaging around a working core.
+
+---
+
 ## 1. High-Complexity Data Pipeline
 
 The end-to-end sequence from a teacher's sentence to a published, verified, share-linked manipulative. Every trust boundary, isolation boundary, and verification gate is drawn explicitly. Nothing model-generated crosses into a student's browser without passing all four gates (G1 content-safety in, G2 AST/static validation, G3 headless invariant assertion, G4 content-safety out).
