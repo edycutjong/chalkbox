@@ -199,3 +199,6 @@ jobs:
           echo "  ✅ Stage 3 — Build Verification"
           echo "  ✅ Stage 4 — E2E Tests (Playwright)"
           echo "  ✅ Stage 5 — Performance (Lighthouse CI)"
+          echo ""
+          echo "Hand-off: the release workflow runs on this pipeline's success,"
+          echo "cuts the semantic-release version, and deploys it to Vercel production."

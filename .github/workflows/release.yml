@@ -1,11 +1,17 @@
 name: release
 
+# Runs only after the full CI/CD Pipeline succeeds on main (the Stage 6 deploy
+# gate), then cuts the semantic-release version and deploys that exact release
+# to Vercel production — so the version in the site footer always matches the
+# tagged release.
 on:
-  push:
+  workflow_run:
+    workflows: ["CI/CD Pipeline"]
+    types: [completed]
     branches: [main]
 
 # Only one release run at a time; let it push the version/changelog commit + tag.
-concurrency: release-${{ github.ref }}
+concurrency: release-main
 
 permissions:
   contents: write
@@ -14,10 +20,12 @@ permissions:
 
 jobs:
   release:
+    if: github.event.workflow_run.conclusion == 'success'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
         with:
+          ref: main
           fetch-depth: 0
           persist-credentials: true
       - uses: actions/setup-node@v4
@@ -29,3 +37,16 @@ jobs:
         run: npx semantic-release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      # The workspace now contains the release commit (bumped package.json),
+      # so the deployed footer shows the exact released version.
+      - name: Deploy to Vercel (production)
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+        run: |
+          if [ -z "$VERCEL_TOKEN" ]; then
+            echo "VERCEL_TOKEN secret not set — skipping deploy."
+            exit 0
+          fi
+          npx vercel@latest deploy --prod --yes --token "$VERCEL_TOKEN"
