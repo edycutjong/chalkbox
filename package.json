@@ -1,6 +1,6 @@
 {
   "name": "chalkbox",
-  "version": "1.2.7",
+  "version": "1.3.0",
   "private": true,
   "description": "Chalkbox — a teacher types a misconception; Codex conjures a self-tested interactive math/physics manipulative behind a phone-friendly share link.",
   "scripts": {

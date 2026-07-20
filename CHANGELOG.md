@@ -1,3 +1,10 @@
+# [1.3.0](https://github.com/edycutjong/chalkbox/compare/v1.2.7...v1.3.0) (2026-07-20)
+
+
+### Features
+
+* **web:** show release version in footer; release workflow now gates on CI and deploys ([76327f7](https://github.com/edycutjong/chalkbox/commit/76327f7602c70deee65a7be63fc74da10a6e243f))
+
 ## [1.2.7](https://github.com/edycutjong/chalkbox/compare/v1.2.6...v1.2.7) (2026-07-20)
 
 
