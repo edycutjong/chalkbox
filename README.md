@@ -8,8 +8,8 @@
 
   <br/><br/>
 
-  [![Live Demo](https://img.shields.io/badge/🚀_Live-chalkbox--theta.vercel.app-14b8a6?style=for-the-badge)](https://chalkbox-theta.vercel.app)
-  [![Pitch Video](https://img.shields.io/badge/🎬_Demo-Video-ef4444?style=for-the-badge)](#-demo-video)
+  [![Live Demo](https://img.shields.io/badge/🚀_Live-chalkbox.edycu.dev-14b8a6?style=for-the-badge)](https://chalkbox.edycu.dev)
+  [![Pitch Video](https://img.shields.io/badge/🎬_Demo-Video-ef4444?style=for-the-badge)](https://youtu.be/_JGTRZTHvOw)
   [![Built for OpenAI Build Week](https://img.shields.io/badge/OpenAI-Build_Week_2026-8b5cf6?style=for-the-badge)](https://openai.devpost.com)
 
   <br/>
@@ -18,7 +18,6 @@
   ![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=flat&logo=typescript&logoColor=white)
   ![Codex CLI](https://img.shields.io/badge/Codex_CLI-412991?style=flat&logo=openai&logoColor=white)
   ![GPT-5.6](https://img.shields.io/badge/GPT--5.6-412991?style=flat&logo=openai&logoColor=white)
-  ![Supabase](https://img.shields.io/badge/Supabase-3ECF8E?style=flat&logo=supabase&logoColor=white)
   ![Vercel](https://img.shields.io/badge/Vercel-black?style=flat&logo=vercel)
   [![License: MIT](https://img.shields.io/badge/License-MIT-14b8a6?style=flat)](LICENSE)
   [![CI](https://github.com/edycutjong/chalkbox/actions/workflows/ci.yml/badge.svg)](https://github.com/edycutjong/chalkbox/actions/workflows/ci.yml)
@@ -31,9 +30,21 @@
 ## 📸 See it in Action
 
 <div align="center">
-  <a href="https://chalkbox-theta.vercel.app">
+  <a href="https://chalkbox.edycu.dev">
+    <img src="docs/screenshot-live-generation.png" alt="A real live generation: G2 static checks clean, 5/5 invariants hold, Verified · Published on attempt 1 — with the generated source and the student share link" width="100%">
   </a>
-  <img src="docs/devpost-gallery.png" alt="The sim tests itself before a student ever sees it" width="100%">
+  <p><em>A real live generation, captured unedited: static safety checks clean → 5/5 invariants hold → <strong>Verified · Published</strong> on the first attempt, with the generated source and the student share link.</em></p>
+
+  <table>
+    <tr>
+      <td width="50%"><img src="docs/screenshot-gallery.png" alt="The curriculum-tagged gallery — every card shows its Common Core / NGSS standard and the exact teacher prompt that generated it" width="100%"></td>
+      <td width="50%"><img src="docs/screenshot-student-view.png" alt="The student view — a zero-chrome, phone-first manipulative with a coaching prompt" width="100%"></td>
+    </tr>
+    <tr>
+      <td align="center"><em>The gallery: every card shows its real standard code + the exact prompt.</em></td>
+      <td align="center"><em>The student view: zero-chrome, drag the divisor, feel the misconception break.</em></td>
+    </tr>
+  </table>
 </div>
 
 > **A teacher types a misconception → Codex writes a manipulative, runs its own smoke test, retries on failure, and only then publishes → a student opens it on any phone.** Nothing untested reaches a child.
@@ -79,7 +90,7 @@ The pedagogy itself is encoded as a machine-checked test. If Codex generates a s
 | **Frontend** | Next.js + React on Vercel |
 | **Generation engine** | GPT-5.6 (Sol) via the OpenAI Responses API — generates + retries in an isolated per-request VM/tmp workspace |
 | **Models** | GPT-5.6 **Sol** (generation/iteration) · GPT-5.6 **Luna** (triage: safety gate + grade tag + standard alignment) |
-| **Data** | Supabase (share links + gallery) |
+| **Data** | Curriculum-tagged seed store (share links + gallery); Supabase persistence is a marked `// STUB:` |
 | **Sandbox** | Null-origin iframe · strict CSP (`connect-src 'none'`) · import allowlist · AST validation |
 
 Full design in [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) · complexity blueprint in [`docs/COMPLEXITY.md`](docs/COMPLEXITY.md) · demo data in [`docs/SEED_DATA.md`](docs/SEED_DATA.md).
@@ -104,9 +115,9 @@ Live generation activates only with `OPENAI_API_KEY` present **and** `CHALKBOX_D
 
 ## 🚀 Getting Started
 
-> **For Judges:** the seeded gallery at [chalkbox-theta.vercel.app](https://chalkbox-theta.vercel.app) is browsable with zero setup — no login.
+> **For Judges:** the seeded gallery at [chalkbox.edycu.dev](https://chalkbox.edycu.dev) is browsable with zero setup — no login.
 >
-> **Current status — runnable skeleton in demo mode.** The Create flow replays the flagship fraction-division build end-to-end (prompt → self-test → published share link) with no API keys. The harness it exercises is **real and unit-tested**: the static validator (import allowlist / no-network) and the interactive-invariant runner both work and pass. The live Codex-driven generation engine (arbitrary prompt → new verified sim) is the next milestone and drops in behind the `// STUB:` seams in `src/lib/harness/orchestrator.ts`.
+> **Current status — live engine built; the hosted site runs keyless demo mode.** With an `OPENAI_API_KEY` and `CHALKBOX_DEMO_MODE=false`, `RealOrchestrator` generates, self-tests, and publishes a **new** manipulative from an arbitrary prompt (that's the generation in the demo video). Without a key, the Create flow replays the flagship fraction-division build end-to-end — and the harness it exercises is the **same real, unit-tested** validator + invariant runner the live engine uses. The hosted site stays keyless on purpose: no spend risk, identical product surface.
 
 ### Prerequisites
 - Node.js ≥ 20
@@ -117,7 +128,7 @@ Live generation activates only with `OPENAI_API_KEY` present **and** `CHALKBOX_D
 git clone https://github.com/edycutjong/chalkbox.git
 cd chalkbox
 npm install
-cp .env.example .env.local  # add your OpenAI + Supabase keys
+cp .env.example .env.local  # optional: add an OpenAI key for live generation — demo mode needs none
 npm run dev
 ```
 

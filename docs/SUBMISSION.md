@@ -1,6 +1,6 @@
 # SUBMISSION — Chalkbox (OpenAI Build Week, Education Track)
 
-> Ready-to-paste Devpost copy. Judges are OpenAI staff (incl. VP Education Leah Belsky). One track: **Education**. Live at **chalkbox-theta.vercel.app**.
+> Ready-to-paste Devpost copy. Judges are OpenAI staff (incl. VP Education Leah Belsky). One track: **Education**. Live at **chalkbox.edycu.dev**.
 
 ---
 
@@ -27,7 +27,7 @@ Chalkbox closes that gap. A teacher types the misconception she wants to break �
 
 **Scope is deliberately narrow: math and physics manipulatives only, stated proudly in the UI.** That discipline is why the generation loop can be hardened enough to trust with 32 kids.
 
-Chalkbox is live at **chalkbox-theta.vercel.app** — a seeded gallery you can play with immediately (no login) and a rate-limited "generate live" button. Auth is magic-link only; a teacher just needs to own her creations.
+Chalkbox is live at **chalkbox.edycu.dev** — a seeded gallery you can play with immediately (no login) and a rate-limited "generate live" button. Auth is magic-link only; a teacher just needs to own her creations.
 
 The insight the whole thing rests on: pedagogy is clear that manipulatives beat explanations, but manipulatives are the one artifact teachers can't author. Codex removes exactly that barrier — and nothing else does.
 
@@ -72,7 +72,7 @@ This is a "build WITH Codex" event; the primitive to defend is the coding-agent 
 - ☐ Public repo + **MIT license** (license present from commit 1)
 - ☐ README: setup, sample prompts, run guidance, **"Where Codex Accelerated"** + key decisions
 - ☐ **`/feedback` Codex Session ID** (the primary CLI thread that built the pipeline)
-- ☐ Live judge-testable URL: **chalkbox-theta.vercel.app** (seeded gallery + rate-limited live generation, zero setup)
+- ☐ Live judge-testable URL: **chalkbox.edycu.dev** (seeded gallery + rate-limited live generation, zero setup)
 
 ## Personal sign-off
 Thank you for taking the time to review Chalkbox. This was built for the teacher at 9 PM on a Sunday who knows exactly what her class is stuck on and, until now, had no way to turn that into something a kid could touch. — Edy
@@ -89,10 +89,10 @@ Thank you for taking the time to review Chalkbox. This was built for the teacher
 | **Honest Limitation** — ≥1 acknowledged gap | ✅ | Non-zero failure rate after retry (published, not hidden); math+physics only; smoke test ≠ pedagogical proof |
 | **Benchmark Proof** — reproducible p50/p95 | ☐ | `scripts/bench.ts` specced in COMPLEXITY.md; not built yet — no generation benchmark exists today. Do NOT cite p50/p95 numbers until the script runs. |
 | **Test Count** — exact count in README | ◐ | **8 harness unit tests + 24 E2E tests today** (validator, invariant runner, orchestrator). 100+ is the target once the engine lands — state the *real* count in the README, not the target. |
-| **Live URL** — deployed, judge-testable | ✅ | chalkbox-theta.vercel.app, seeded gallery, no setup |
+| **Live URL** — deployed, judge-testable | ✅ | chalkbox.edycu.dev, seeded gallery, no setup |
 | **Proof of production** (no chain — adapted) | ✅ | Live URL + generation-success benchmark + seeded 15-item gallery + ≥5 real external teachers |
 | **Personal Sign-off** — human thank-you | ✅ | Present above |
 | **Scope = Narrow+Deep** — ONE flow, not a feature list | ✅ | Prompt → verified sim → share link; math+physics only; 3 surfaces |
 | **Default path = judged capability** (Tether #52) | ✅ | The zero-flag demo path exercises the self-test loop; nothing hides the capability behind a nicer side flow |
-| **Real demo video is a hard gate** (Turena #50) | ☐ | Record real ≤3-min narrated video before submit — not a placeholder |
+| **Real demo video is a hard gate** (Turena #50) | ✅ | https://youtu.be/_JGTRZTHvOw — 2:53, narrated, real live generation on camera |
 | **Mocked components labeled** (Turena #49) | ✅ | Seed personas labeled "sample"; live vs. seeded generation distinguished; time-compression in video labeled |
