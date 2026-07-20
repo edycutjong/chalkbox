@@ -1,3 +1,10 @@
+## [1.2.7](https://github.com/edycutjong/chalkbox/compare/v1.2.6...v1.2.7) (2026-07-20)
+
+
+### Bug Fixes
+
+* **deps:** zero out npm audit — semantic-release 25, drop @lhci/cli devDep, patch next's postcss ([1ea2c38](https://github.com/edycutjong/chalkbox/commit/1ea2c3836f5f2f0aa7cf395a260670e0d620df8b))
+
 ## [1.2.6](https://github.com/edycutjong/chalkbox/compare/v1.2.5...v1.2.6) (2026-07-19)
 
 
