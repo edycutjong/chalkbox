@@ -10,6 +10,7 @@
 
   [![Live Demo](https://img.shields.io/badge/🚀_Live-chalkbox.edycu.dev-14b8a6?style=for-the-badge)](https://chalkbox.edycu.dev)
   [![Pitch Video](https://img.shields.io/badge/🎬_Demo-Video-ef4444?style=for-the-badge)](https://youtu.be/_JGTRZTHvOw)
+  [![Pitch Deck](https://img.shields.io/badge/📊_Pitch-Deck-f59e0b?style=for-the-badge)](https://chalkbox.edycu.dev/pitch)
   [![Built for OpenAI Build Week](https://img.shields.io/badge/OpenAI-Build_Week_2026-8b5cf6?style=for-the-badge)](https://openai.devpost.com)
 
   <br/>
@@ -213,6 +214,12 @@ chalkbox/
   </a>
   <p><strong><a href="https://youtu.be/_JGTRZTHvOw">▶ Watch the 3-minute demo</a></strong> — a genuine live generation on camera (Codex writes → self-tests → Verified · Published), the fail→fix→verified loop, and the student view.</p>
 </div>
+
+---
+
+## 📊 Pitch Deck
+
+A self-contained 10-slide deck (real product screenshots, no placeholders) is live at **[chalkbox.edycu.dev/pitch](https://chalkbox.edycu.dev/pitch)** — press <kbd>P</kbd> in-deck for speaker notes, <kbd>Cmd/Ctrl</kbd>+<kbd>P</kbd> to export a landscape PDF.
 
 ---
 

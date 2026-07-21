@@ -19,6 +19,7 @@ const COLUMNS: { heading: string; links: { label: string; href: string }[] }[] =
     heading: "Project",
     links: [
       { label: "GitHub", href: GITHUB },
+      { label: "Pitch deck", href: "/pitch" },
       { label: "README", href: `${GITHUB}#readme` },
       { label: "Architecture", href: `${GITHUB}/blob/main/docs/ARCHITECTURE.md` },
       { label: "Complexity blueprint", href: `${GITHUB}/blob/main/docs/COMPLEXITY.md` },

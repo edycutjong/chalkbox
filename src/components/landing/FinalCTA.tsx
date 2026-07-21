@@ -39,6 +39,9 @@ export function FinalCTA() {
             <Link href="/gallery" className="btn btn-ghost text-base">
               Explore the gallery
             </Link>
+            <Link href="/pitch" className="btn btn-ghost text-base">
+              View the pitch deck
+            </Link>
           </div>
         </div>
       </div>
