@@ -55,4 +55,122 @@ describe("generated simulation runtime", () => {
     expect(result.render.error).toContain("value-readout");
     expect(result.invariantRun.passed).toBe(false);
   });
+
+  it("compiles a component that actually exercises useState/useMemo/useCallback", async () => {
+    const hooksComponentSrc = `import React from "react";
+import { useState, useMemo, useCallback } from "react";
+export default function Manipulative() {
+  const [value] = useState(3);
+  const doubled = useMemo(() => value * 2, [value]);
+  const onClick = useCallback(() => doubled, [doubled]);
+  onClick();
+  return React.createElement("div", { "data-testid": "demo-sim" },
+    React.createElement("input", { "data-testid": "value-slider", type: "range" }),
+    React.createElement("output", { "data-testid": "value-readout" }, String(doubled)));
+}`;
+    const result = await runGeneratedSim({
+      title: "hooks",
+      componentSrc: hooksComponentSrc,
+      probeSrc,
+      invariants,
+    });
+    expect(result.render.ok).toBe(true);
+    expect(result.render.text.join(" ")).toContain("6");
+  });
+
+  it("fails render when the component source has no exported function", async () => {
+    const result = await runGeneratedSim({
+      title: "no-export",
+      componentSrc: `const notAFunction = 42;`,
+      probeSrc,
+      invariants,
+    });
+    expect(result.render.ok).toBe(false);
+    expect(result.render.error).toContain("must export a named function");
+  });
+
+  it("fails render when the probe source never defines createProbe", async () => {
+    const result = await runGeneratedSim({
+      title: "no-probe",
+      componentSrc,
+      probeSrc: `function notCreateProbe() { return {}; }`,
+      invariants,
+    });
+    expect(result.render.ok).toBe(false);
+    expect(result.render.error).toContain("createProbe");
+  });
+
+  it("fails render when createProbe() does not return a SimProbe-shaped object", async () => {
+    const result = await runGeneratedSim({
+      title: "bad-probe-shape",
+      componentSrc,
+      probeSrc: `export function createProbe() { return { rootTestId: "demo-sim" }; }`,
+      invariants,
+    });
+    expect(result.render.ok).toBe(false);
+    expect(result.render.error).toContain("SimProbe");
+  });
+
+  it("renders a nested function component, a Fragment, an array of children, and numeric text", async () => {
+    const nestedComponentSrc = `import React from "react";
+function Readout() {
+  return React.createElement(React.Fragment, null,
+    React.createElement("output", { "data-testid": "value-readout" }, 42));
+}
+export default function Manipulative() {
+  return React.createElement("div", { "data-testid": "demo-sim" },
+    [React.createElement("input", { "data-testid": "value-slider", type: "range" })],
+    React.createElement(Readout));
+}`;
+    const result = await runGeneratedSim({
+      title: "nested",
+      componentSrc: nestedComponentSrc,
+      probeSrc,
+      invariants,
+    });
+    expect(result.render.ok).toBe(true);
+    expect(result.render.text).toContain("42");
+  });
+
+  it("fails render when the component returns a non-renderable value", async () => {
+    const badComponentSrc = `import React from "react";
+export default function Manipulative() {
+  return Symbol("not renderable");
+}`;
+    const result = await runGeneratedSim({
+      title: "non-renderable",
+      componentSrc: badComponentSrc,
+      probeSrc,
+      invariants,
+    });
+    expect(result.render.ok).toBe(false);
+    expect(result.render.error).toContain("non-renderable");
+  });
+
+  it("fails render when an element has an invalid (non-string/function/symbol) type", async () => {
+    const badComponentSrc = `import React from "react";
+export default function Manipulative() {
+  return { type: 42, props: {} };
+}`;
+    const result = await runGeneratedSim({
+      title: "invalid-type",
+      componentSrc: badComponentSrc,
+      probeSrc,
+      invariants,
+    });
+    expect(result.render.ok).toBe(false);
+    expect(result.render.error).toContain("invalid element type");
+  });
+
+  it("produces a stable sha256 sourceHash for a given componentSrc, on both success and failure", async () => {
+    const ok = await runGeneratedSim({ title: "demo", componentSrc, probeSrc, invariants });
+    const failing = await runGeneratedSim({
+      title: "demo",
+      componentSrc,
+      probeSrc: `export function createProbe() { return {}; }`,
+      invariants,
+    });
+    expect(ok.sourceHash).toBe(failing.sourceHash);
+    expect(ok.sourceHash).toMatch(/^[A-Za-z0-9+/=]+$/);
+  });
 });
