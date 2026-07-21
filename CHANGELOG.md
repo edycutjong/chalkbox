@@ -1,3 +1,10 @@
+# [1.4.0](https://github.com/edycutjong/chalkbox/compare/v1.3.0...v1.4.0) (2026-07-21)
+
+
+### Features
+
+* **pitch:** publish live pitch deck at /pitch with real screenshots ([96e735f](https://github.com/edycutjong/chalkbox/commit/96e735f08eb115bd4ba3e7b5c3d8ca7585072f5a))
+
 # [1.3.0](https://github.com/edycutjong/chalkbox/compare/v1.2.7...v1.3.0) (2026-07-20)
 
 
