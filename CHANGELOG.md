@@ -1,3 +1,10 @@
+## [1.4.1](https://github.com/edycutjong/chalkbox/compare/v1.4.0...v1.4.1) (2026-07-21)
+
+
+### Bug Fixes
+
+* **pitch:** full-bleed ambient background + micro-animation on slide switch ([8cdbb6e](https://github.com/edycutjong/chalkbox/commit/8cdbb6e221fd97e054e3ac46231202983d042ddb))
+
 # [1.4.0](https://github.com/edycutjong/chalkbox/compare/v1.3.0...v1.4.0) (2026-07-21)
 
 
