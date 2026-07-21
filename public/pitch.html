@@ -5,6 +5,47 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Chalkbox — Pitch Deck</title>
 
+    <!-- ── Metadata (mirrors the landing page) ─────────────────────── -->
+    <meta
+      name="description"
+      content="Chalkbox pitch deck — a teacher types a math or physics misconception; Codex builds, self-tests, and publishes a live interactive manipulative behind a phone-friendly share link. The moat is the self-test verification loop."
+    />
+    <meta name="author" content="Edy Cu" />
+    <meta name="application-name" content="Chalkbox" />
+    <meta name="theme-color" content="#020617" />
+    <link rel="canonical" href="https://chalkbox.edycu.dev/pitch" />
+
+    <!-- Favicons -->
+    <link rel="icon" href="/icon.svg" type="image/svg+xml" />
+    <link rel="icon" href="/icon-512.png" sizes="512x512" type="image/png" />
+    <link rel="shortcut icon" href="/icon.svg" />
+    <link rel="apple-touch-icon" href="/apple-icon.png" sizes="180x180" />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Chalkbox" />
+    <meta property="og:title" content="Chalkbox — Pitch Deck" />
+    <meta
+      property="og:description"
+      content="A sentence becomes a self-tested manipulative. The 10-slide Chalkbox pitch deck, built for OpenAI Build Week."
+    />
+    <meta property="og:url" content="https://chalkbox.edycu.dev/pitch" />
+    <meta property="og:image" content="https://chalkbox.edycu.dev/og-image.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Chalkbox" />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@edycutjong" />
+    <meta name="twitter:creator" content="@edycutjong" />
+    <meta name="twitter:title" content="Chalkbox — Pitch Deck" />
+    <meta
+      name="twitter:description"
+      content="A sentence becomes a self-tested manipulative. The 10-slide Chalkbox pitch deck, built for OpenAI Build Week."
+    />
+    <meta name="twitter:image" content="https://chalkbox.edycu.dev/og-image.png" />
+
     <!--
     ════════════════════════════════════════════════════════════════════════
       CHALKBOX · 10-slide pitch deck (single self-contained file)
@@ -428,6 +469,39 @@
         line-height: 1.45;
       }
 
+      /* ── Inline SVG icons (replace emoji — self-contained, currentColor) ── */
+      .i {
+        width: 1em;
+        height: 1em;
+        flex: none;
+        display: inline-block;
+        vertical-align: -0.14em;
+        fill: none;
+        stroke: currentColor;
+        stroke-width: 1.7;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+      }
+      .i.gh {
+        fill: currentColor;
+        stroke: none;
+      }
+      .feat .ic {
+        color: var(--color-primary); /* tint the four feature icons teal */
+      }
+      .i.x {
+        color: var(--color-error);
+      }
+      .i.ok {
+        color: var(--color-success);
+      }
+      /* icon + label row (gap list, moat list, contact) */
+      .irow {
+        display: flex;
+        align-items: center;
+        gap: 0.6em;
+      }
+
       .top-tag {
         position: absolute;
         top: 96px;
@@ -619,7 +693,29 @@
               Built for OpenAI Build Week · Education
             </div>
             <h1 style="font-size: 150px; font-weight: 700">
-              Chalkbox <span style="font-size: 110px">🖍️</span>
+              Chalkbox
+              <svg
+                viewBox="0 0 64 64"
+                role="img"
+                aria-label="Chalkbox mark"
+                style="width: 108px; height: 108px; vertical-align: -14px"
+              >
+                <defs>
+                  <linearGradient id="bm" x1="0" y1="0" x2="1" y2="1">
+                    <stop offset="0" stop-color="#14b8a6" />
+                    <stop offset="1" stop-color="#f59e0b" />
+                  </linearGradient>
+                </defs>
+                <rect x="6" y="6" width="52" height="52" rx="15" fill="url(#bm)" />
+                <path
+                  d="M18 33 l10 10 l18-22"
+                  fill="none"
+                  stroke="#020617"
+                  stroke-width="5.5"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
             </h1>
             <p style="font-size: 42px; color: var(--color-mid); margin-top: 28px; max-width: 30ch">
               A sentence becomes a <span class="grad">self-tested</span> manipulative.<span class="cursor"></span>
@@ -676,11 +772,37 @@
             <div class="card">
               <div class="mono mid" style="font-size: 18px; margin-bottom: 20px">the gap</div>
               <div style="display: flex; flex-direction: column; gap: 18px; font-size: 22px">
-                <div>📝 Worksheet — <span class="mid">static, not interactive</span></div>
-                <div>🎥 A video — <span class="mid">someone else&apos;s example</span></div>
-                <div>🏢 Vendor catalog — <span class="mid">months away, generic</span></div>
-                <div style="color: var(--color-primary)">
-                  💻 Bespoke interactive — <span class="mid">impossible… until now</span>
+                <div class="irow">
+                  <svg class="i" viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z" />
+                    <path d="M14 3v5h5" />
+                    <path d="M9 13h6M9 17h4" />
+                  </svg>
+                  <span>Worksheet — <span class="mid">static, not interactive</span></span>
+                </div>
+                <div class="irow">
+                  <svg class="i" viewBox="0 0 24 24" aria-hidden="true">
+                    <rect x="3" y="5" width="18" height="14" rx="2" />
+                    <path d="M10 9l5 3-5 3z" />
+                  </svg>
+                  <span>A video — <span class="mid">someone else&apos;s example</span></span>
+                </div>
+                <div class="irow">
+                  <svg class="i" viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M4 21V6a1 1 0 0 1 1-1h9a1 1 0 0 1 1 1v15" />
+                    <path d="M15 21V10h4a1 1 0 0 1 1 1v10" />
+                    <path d="M8 8h3M8 12h3M8 16h3" />
+                    <path d="M3 21h18" />
+                  </svg>
+                  <span>Vendor catalog — <span class="mid">months away, generic</span></span>
+                </div>
+                <div class="irow" style="color: var(--color-primary)">
+                  <svg class="i" viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M8 8l-4 4 4 4" />
+                    <path d="M16 8l4 4-4 4" />
+                    <path d="M13 6l-2 12" />
+                  </svg>
+                  <span>Bespoke interactive — <span class="mid">impossible… until now</span></span>
                 </div>
               </div>
             </div>
@@ -844,28 +966,50 @@
             </div>
             <div style="display: flex; flex-direction: column; gap: 34px">
               <div class="feat">
-                <span class="ic">🔁</span>
+                <span class="ic">
+                  <svg class="i" viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M4 12a8 8 0 0 1 13.66-5.66L20 8" />
+                    <path d="M20 3v5h-5" />
+                    <path d="M20 12a8 8 0 0 1-13.66 5.66L4 16" />
+                    <path d="M4 21v-5h5" />
+                  </svg>
+                </span>
                 <div>
                   <h3>It tests itself</h3>
                   <p>Every sim renders headlessly and asserts its own interactive invariants before it publishes.</p>
                 </div>
               </div>
               <div class="feat">
-                <span class="ic">🛡️</span>
+                <span class="ic">
+                  <svg class="i" viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M12 3l7 3v5c0 4.5-3 7.6-7 9-4-1.4-7-4.5-7-9V6z" />
+                    <path d="M9 12l2 2 4-4.5" />
+                  </svg>
+                </span>
                 <div>
                   <h3>Sandboxed by construction</h3>
                   <p>Null-origin iframe, strict CSP (connect-src 'none'), import allowlist, AST validation.</p>
                 </div>
               </div>
               <div class="feat">
-                <span class="ic">📐</span>
+                <span class="ic">
+                  <svg class="i" viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M3 8l5-5 13 13-5 5z" />
+                    <path d="M8 6l2 2M11 9l2 2M14 12l2 2" />
+                  </svg>
+                </span>
                 <div>
                   <h3>Standards-aligned</h3>
                   <p>Math &amp; physics, tagged to real Common Core / NGSS codes; off-curriculum prompts are rejected.</p>
                 </div>
               </div>
               <div class="feat">
-                <span class="ic">📱</span>
+                <span class="ic">
+                  <svg class="i" viewBox="0 0 24 24" aria-hidden="true">
+                    <rect x="7" y="3" width="10" height="18" rx="2.5" />
+                    <path d="M11 18h2" />
+                  </svg>
+                </span>
                 <div>
                   <h3>A link, not an app</h3>
                   <p>Students open a zero-chrome manipulative on any phone — no login, no install.</p>
@@ -897,10 +1041,26 @@
             <div class="card">
               <div class="mono mid" style="font-size: 18px; margin-bottom: 22px">the moat</div>
               <div style="display: flex; flex-direction: column; gap: 22px; font-size: 23px">
-                <div>❌ <span class="mid">One-shot generator</span> — plausible, unverified</div>
-                <div>❌ <span class="mid">Fixed sim catalog</span> — generic, slow to change</div>
-                <div style="color: var(--color-primary); font-weight: 600">
-                  ✅ Chalkbox — executes, tests, retries, then publishes
+                <div class="irow">
+                  <svg class="i x" viewBox="0 0 24 24" aria-hidden="true">
+                    <circle cx="12" cy="12" r="9" />
+                    <path d="M15 9l-6 6M9 9l6 6" />
+                  </svg>
+                  <span><span class="mid">One-shot generator</span> — plausible, unverified</span>
+                </div>
+                <div class="irow">
+                  <svg class="i x" viewBox="0 0 24 24" aria-hidden="true">
+                    <circle cx="12" cy="12" r="9" />
+                    <path d="M15 9l-6 6M9 9l6 6" />
+                  </svg>
+                  <span><span class="mid">Fixed sim catalog</span> — generic, slow to change</span>
+                </div>
+                <div class="irow" style="color: var(--color-primary); font-weight: 600">
+                  <svg class="i ok" viewBox="0 0 24 24" aria-hidden="true">
+                    <circle cx="12" cy="12" r="9" />
+                    <path d="M8 12l3 3 5-6" />
+                  </svg>
+                  <span>Chalkbox — executes, tests, retries, then publishes</span>
                 </div>
               </div>
               <div
@@ -962,9 +1122,29 @@
                 building the safe path from a teacher&apos;s sentence to a verified interactive.
               </p>
               <div style="margin-top: 40px; display: flex; flex-direction: column; gap: 12px">
-                <div class="mono" style="font-size: 20px">🌐 chalkbox.edycu.dev</div>
-                <div class="mono" style="font-size: 20px">💻 github.com/edycutjong/chalkbox</div>
-                <div class="mono" style="font-size: 20px">✉️ edy.cu@live.com</div>
+                <div class="mono irow" style="font-size: 20px">
+                  <svg class="i" viewBox="0 0 24 24" aria-hidden="true">
+                    <circle cx="12" cy="12" r="9" />
+                    <path d="M3 12h18" />
+                    <path d="M12 3c3 3.5 3 14.5 0 18M12 3c-3 3.5-3 14.5 0 18" />
+                  </svg>
+                  <span>chalkbox.edycu.dev</span>
+                </div>
+                <div class="mono irow" style="font-size: 20px">
+                  <svg class="i gh" viewBox="0 0 24 24" aria-hidden="true">
+                    <path
+                      d="M12 2C6.48 2 2 6.48 2 12c0 4.42 2.87 8.17 6.84 9.5.5.09.68-.22.68-.48 0-.24-.01-.87-.01-1.7-2.78.6-3.37-1.34-3.37-1.34-.45-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.89 1.53 2.34 1.09 2.91.83.09-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.94 0-1.09.39-1.98 1.03-2.68-.1-.25-.45-1.27.1-2.65 0 0 .84-.27 2.75 1.02.8-.22 1.65-.33 2.5-.34.85 0 1.7.12 2.5.34 1.91-1.29 2.75-1.02 2.75-1.02.55 1.38.2 2.4.1 2.65.64.7 1.03 1.59 1.03 2.68 0 3.84-2.34 4.68-4.57 4.93.36.31.68.92.68 1.85 0 1.34-.01 2.42-.01 2.75 0 .27.18.58.69.48A10.01 10.01 0 0 0 22 12c0-5.52-4.48-10-10-10z"
+                    />
+                  </svg>
+                  <span>github.com/edycutjong/chalkbox</span>
+                </div>
+                <div class="mono irow" style="font-size: 20px">
+                  <svg class="i" viewBox="0 0 24 24" aria-hidden="true">
+                    <rect x="3" y="5" width="18" height="14" rx="2" />
+                    <path d="M3 7l9 6 9-6" />
+                  </svg>
+                  <span>edy.cu@live.com</span>
+                </div>
               </div>
             </div>
             <div style="display: grid; place-items: center; gap: 22px">
