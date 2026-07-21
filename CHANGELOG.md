@@ -1,3 +1,10 @@
+# [1.5.0](https://github.com/edycutjong/chalkbox/compare/v1.4.1...v1.5.0) (2026-07-21)
+
+
+### Features
+
+* **pitch:** replace emoji with inline SVG icons + add page metadata/favicon ([1554ac9](https://github.com/edycutjong/chalkbox/commit/1554ac9daad0c8f07199e0efcc961cc97379e282))
+
 ## [1.4.1](https://github.com/edycutjong/chalkbox/compare/v1.4.0...v1.4.1) (2026-07-21)
 
 
