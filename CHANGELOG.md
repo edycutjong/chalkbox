@@ -1,3 +1,10 @@
+## [1.5.1](https://github.com/edycutjong/chalkbox/compare/v1.5.0...v1.5.1) (2026-08-07)
+
+
+### Bug Fixes
+
+* **deps:** patch postcss, undici and sharp security advisories ([#31](https://github.com/edycutjong/chalkbox/issues/31)) ([22f7496](https://github.com/edycutjong/chalkbox/commit/22f749669d30946b39598ca5d28a111da4355beb))
+
 # [1.5.0](https://github.com/edycutjong/chalkbox/compare/v1.4.1...v1.5.0) (2026-07-21)
 
 
